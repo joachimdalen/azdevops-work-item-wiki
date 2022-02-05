@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json.schemastore.org/vss-extension",
+  "manifestVersion": 1,
+  "baseUri": "https://localhost:3000",
+  "public": false,
+  "id": "work-item-wiki-dev",
+  "name": "Work Item Wiki - DEV",
+  "publisher": "JoachimDalen",
+  "version": "0.0.4",
+  "description": "Link or add static wiki pages to your work items",
+  "categories": ["Azure Boards"],
+  "demands": ["api-version/5.1"],
+  "tags": [""],
+  "scopes": ["vso.wiki"],
+  "icons": {
+    "default": "extension-icon.png"
+  },
+  "content": {
+    "details": { "path": "marketplace/docs/README.md" },
+    "changelog": { "path": "marketplace/docs/CHANGELOG.md" }
+  },
+  "links": {
+    "repository": {
+      "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki"
+    },
+    "support": {
+      "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues"
+    },
+    "privacypolicy": {
+      "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/blob/master/PRIVACY.md"
+    },
+    "license": {
+      "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/blob/master/LICENSE"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki"
+  },
+  "branding": {
+    "color": "#069A85",
+    "theme": "dark"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services.Cloud"
+    }
+  ],
+  "files": [],
+  "screenshots": [],
+  "contributions": [
+    {
+      "id": "work-item-wiki-control",
+      "type": "ms.vss-work-web.work-item-form-control",
+      "targets": ["ms.vss-work-web.work-item-form"],
+      "description": "Link or add static wiki pages to your work items",
+      "properties": {
+        "name": "Work Item Wiki Control",
+        "uri": "wi-control.html",
+        "inputs": [
+          {
+            "id": "wikiUrl",
+            "name": "Wiki Url",
+            "description": "The url of the wiki page",
+            "validation": {
+              "dataType": "String",
+              "isRequired": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
