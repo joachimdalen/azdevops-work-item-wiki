@@ -6,12 +6,12 @@
   "id": "work-item-wiki-dev",
   "name": "Work Item Wiki - DEV",
   "publisher": "JoachimDalen",
-  "version": "0.0.4",
-  "description": "Link or add static wiki pages to your work items",
+  "version": "0.0.8",
+  "description": "Add static wiki pages to your work items",
   "categories": ["Azure Boards"],
   "demands": ["api-version/5.1"],
   "tags": [""],
-  "scopes": ["vso.wiki"],
+  "scopes": ["vso.wiki", "vso.code"],
   "icons": {
     "default": "extension-icon.png"
   },
@@ -53,7 +53,7 @@
       "id": "work-item-wiki-control",
       "type": "ms.vss-work-web.work-item-form-control",
       "targets": ["ms.vss-work-web.work-item-form"],
-      "description": "Link or add static wiki pages to your work items",
+      "description": "Add static wiki pages to your work items",
       "properties": {
         "name": "Work Item Wiki Control",
         "uri": "wi-control.html",

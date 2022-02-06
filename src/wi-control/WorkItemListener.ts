@@ -8,12 +8,16 @@ import {
 
 class WorkItemListener implements IWorkItemNotificationListener {
   async onLoaded(args: IWorkItemLoadedArgs): Promise<void> {
-    webLogger.information('Loaded');
+    webLogger.debug('Loaded');
   }
   onFieldChanged(args: IWorkItemFieldChangedArgs): void {}
   async onSaved(args: IWorkItemChangedArgs): Promise<void> {}
-  onRefreshed(args: IWorkItemChangedArgs): void {}
-  onReset(args: IWorkItemChangedArgs): void {}
+  onRefreshed(args: IWorkItemChangedArgs): void {
+    webLogger.debug('Refreshed');
+  }
+  onReset(args: IWorkItemChangedArgs): void {
+    webLogger.debug('OnReset');
+  }
   onUnloaded(args: IWorkItemChangedArgs): void {}
 }
 

@@ -6,7 +6,7 @@
 <h3 align="center">Work Item Wiki</h3>
 
   <p align="center">
-Link or add static wiki pages to your work items
+Add static wiki pages to your work items
     <br />
     <a href="https://github.com/joachimdalen/azdevops-work-item-wiki"><strong>Explore the docs »</strong></a>
     <br />
