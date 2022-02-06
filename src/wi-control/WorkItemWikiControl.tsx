@@ -14,6 +14,7 @@ import * as DevOps from 'azure-devops-extension-sdk';
 import { ZeroData } from 'azure-devops-ui/ZeroData';
 import { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import { IWikiPage, parseWikiUrl } from '../common';
@@ -25,7 +26,7 @@ interface WitInputs {
 
 const WorkItemWikiControl = (): JSX.Element => {
   const [content, setContent] = useState<string | undefined>();
-  const [imageBase, setImageBase] = useState<string | undefined>();
+  const [repoUrl, setRepoUrl] = useState<string | undefined>();
   const [loading, toggle] = useBooleanToggle(true);
   useResizeTimeout(5000);
   const [wikiClient, gitClient, devOpsService] = useMemo(() => {
@@ -44,7 +45,7 @@ const WorkItemWikiControl = (): JSX.Element => {
       if (project) {
         const wikiDef = await wikiClient.getWiki(wiki.name, project.id);
         const wikiRepo = await gitClient.getRepository(wikiDef.repositoryId, project.name);
-        setImageBase(wikiRepo.url);
+        setRepoUrl(wikiRepo.url);
         const wikiContent = await wikiClient.getPageByIdText(
           project.name,
           wiki.name,
@@ -83,13 +84,23 @@ const WorkItemWikiControl = (): JSX.Element => {
 
     initModule();
   }, []);
-
-  const transformImageUrls = (src: string, alt: string, title: string | null): string => {
-    if (!src.startsWith('/.')) {
-      return src;
+  const transformAttachmentUrl = (url: string) => {
+    if (!url.startsWith('/.attachments')) {
+      return url;
     }
-    const url = `${imageBase}/Items?path=${src}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`;
-    return url;
+    const fullRepoUrl = `${repoUrl}/Items?path=${url}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`;
+    return fullRepoUrl;
+  };
+  const transformImageUrls = (src: string, alt: string, title: string | null): string => {
+    return transformAttachmentUrl(src);
+  };
+
+  const transformLinkUri = (
+    href: string,
+    children: Array<ElementContent>,
+    title: string | null
+  ) => {
+    return transformAttachmentUrl(href);
   };
 
   if (loading) {
@@ -114,7 +125,11 @@ const WorkItemWikiControl = (): JSX.Element => {
     <ErrorBoundary>
       <div className="flex-column flex-grow">
         <div className="padding-8  rendered-markdown-content">
-          <ReactMarkdown remarkPlugins={[gfm]} transformImageUri={transformImageUrls}>
+          <ReactMarkdown
+            remarkPlugins={[gfm]}
+            transformImageUri={transformImageUrls}
+            transformLinkUri={transformLinkUri}
+          >
             {content}
           </ReactMarkdown>
         </div>

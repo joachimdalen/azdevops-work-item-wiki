@@ -2,8 +2,8 @@
   "$schema": "http://json.schemastore.org/vss-extension",
   "manifestVersion": 1,
   "public": false,
-  "id": "work-item-wiki",
-  "name": "Work Item Wiki",
+  "id": "work-item-wiki-qa",
+  "name": "Work Item Wiki - QA",
   "publisher": "JoachimDalen",
   "version": "0.0.1",
   "description": "Add static wiki pages to your work items",
@@ -46,6 +46,10 @@
     }
   ],
   "files": [
+    {
+      "path": "marketplace/docs/images",
+      "addressable": true
+    },
     {
       "path": "dist",
       "addressable": true

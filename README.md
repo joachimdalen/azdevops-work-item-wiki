@@ -69,22 +69,44 @@
 
 ## About The Project
 
+Work item wiki is a control to render a wikipage inside a work item page. This can be useful if you need to document something for that work item type. For example definition of done/ready, bug categories etc.
+
+Example where rendered on the main tab:
+
 ![Product Name Screen Shot][product-screenshot]
 
+### Supported Wiki Features
 
-**Features:**
-
-- Link markdown pages to a custom control your work items
-
-### Limitations
-
-- Does not support rich content such as images and work item links yet
+| Feature             | Supported         |
+| ------------------- | ----------------- |
+| Header (H1, H2, H3) | ✅                |
+| Italic              | ✅                |
+| Bold                | ✅                |
+| Link                | ✅                |
+| Attachment          | ✅                |
+| Image               | ✅                |
+| Code / Code Block   | ✅                |
+| Unordered list      | ✅                |
+| Ordered list        | ✅                |
+| Table               | ✅                |
+| Mermaid Diagram     | ❌                |
+| Work Item Mentions  | ❌                |
+| Table of Contents   | ❌                |
+| Formulas            | ❌                |
+| Mention             | ❌                |
+| Query Results       | ❌                |
+| Task List           | ❌ (Display only) |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Post Install Configuration
 
-Work Item Link is a custom form control
+Work Item Link is a custom form control that needs to be added to the Work Item Form. It can be added on an existing page, or as a new tab. For how to do this, refer to the [official documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/settings/work/custom-controls-process?view=azure-devops#add-a-field-level-contribution-or-custom-control).
+
+Wiki Url is the url to the wiki page, it should look something like: `https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page`
+
+| ![Config one][config-one] | ![Config one][config-two] |
+| ------------------------- | ------------------------- |
 
 <!-- GETTING STARTED -->
 
@@ -117,7 +139,7 @@ Work Item Link is a custom form control
    > npm install
    ```
 
-3. Update publisher in `vss-extension-dev.json`
+3. Update publisher in `vss-extension.dev.json`
 4. Compile development version
 
    ```sh
@@ -169,9 +191,9 @@ If you want to contribute code, I ask that you follow some guidelines.
 - Pull requests should target the `develop` branch
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/123-some-feature`)
+3. Commit your Changes (`git commit -m 'Add some feature'`)
+4. Push to the Branch (`git push origin feature/123-some-feature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -206,5 +228,6 @@ If you have generic questions about the project or usage you can make contact in
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[product-screenshot]: marketplace/docs/images/rule-editor.png
-[feature-toggle-screenshot]: marketplace/docs/images/feature-toggle.png
+[product-screenshot]: marketplace/docs/images/demo-form-control.png
+[config-one]: marketplace/docs/images/control-config-1.png
+[config-two]: marketplace/docs/images/control-config-2.png

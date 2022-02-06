@@ -129,4 +129,18 @@
   ol {
     padding-left: $spacing-32;
   }
+  
+  ul ul,
+  ul ol,
+  ol ul,
+  ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  li {
+    list-style: inherit;
+  }
+  li + li {
+    margin-top: 4px;
+  }
 }
