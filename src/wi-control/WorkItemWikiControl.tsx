@@ -1,15 +1,10 @@
 import {
-  DevOpsService,
   ErrorBoundary,
   LoadingSection,
   useBooleanToggle,
   useResizeTimeout,
   webLogger
 } from '@joachimdalen/azdevops-ext-core';
-import { getClient } from 'azure-devops-extension-api';
-import { GitRestClient } from 'azure-devops-extension-api/Git';
-import { VersionControlRecursionType } from 'azure-devops-extension-api/Git/Git';
-import { WikiRestClient } from 'azure-devops-extension-api/Wiki';
 import * as DevOps from 'azure-devops-extension-sdk';
 import { ZeroData } from 'azure-devops-ui/ZeroData';
 import { useEffect, useMemo, useState } from 'react';
@@ -17,7 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
-import { IWikiPage, parseWikiUrl } from '../common';
+import WikiService from '../common/services/WikiService';
 import WorkItemListener from './WorkItemListener';
 
 interface WitInputs {
@@ -26,35 +21,17 @@ interface WitInputs {
 
 const WorkItemWikiControl = (): JSX.Element => {
   const [content, setContent] = useState<string | undefined>();
-  const [repoUrl, setRepoUrl] = useState<string | undefined>();
+
   const [loading, toggle] = useBooleanToggle(true);
   useResizeTimeout(5000);
-  const [wikiClient, gitClient, devOpsService] = useMemo(() => {
-    const wikiClient = getClient(WikiRestClient);
-    const gitClient = getClient(GitRestClient);
-    return [wikiClient, gitClient, new DevOpsService()];
-  }, []);
+  const [wikiService] = useMemo(() => [new WikiService()], []);
 
   async function loadWikiPage() {
     toggle(true);
     const config: WitInputs = DevOps.getConfiguration().witInputs;
-    const wiki: IWikiPage | undefined = parseWikiUrl(config.wikiUrl);
-
-    if (wiki !== undefined) {
-      const project = await devOpsService.getProject();
-      if (project) {
-        const wikiDef = await wikiClient.getWiki(wiki.name, project.id);
-        const wikiRepo = await gitClient.getRepository(wikiDef.repositoryId, project.name);
-        setRepoUrl(wikiRepo.url);
-        const wikiContent = await wikiClient.getPageByIdText(
-          project.name,
-          wiki.name,
-          wiki.id,
-          VersionControlRecursionType.Full,
-          true
-        );
-        setContent(wikiContent);
-      }
+    const content = await wikiService.loadWikiPage(config.wikiUrl);
+    if (content) {
+      setContent(content);
     }
     toggle(false);
   }
@@ -84,15 +61,9 @@ const WorkItemWikiControl = (): JSX.Element => {
 
     initModule();
   }, []);
-  const transformAttachmentUrl = (url: string) => {
-    if (!url.startsWith('/.attachments')) {
-      return url;
-    }
-    const fullRepoUrl = `${repoUrl}/Items?path=${url}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`;
-    return fullRepoUrl;
-  };
+
   const transformImageUrls = (src: string, alt: string, title: string | null): string => {
-    return transformAttachmentUrl(src);
+    return wikiService.transformAttachmentUrl(src);
   };
 
   const transformLinkUri = (
@@ -100,7 +71,7 @@ const WorkItemWikiControl = (): JSX.Element => {
     children: Array<ElementContent>,
     title: string | null
   ) => {
-    return transformAttachmentUrl(href);
+    return wikiService.transformAttachmentUrl(href);
   };
 
   if (loading) {
