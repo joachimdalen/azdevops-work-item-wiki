@@ -3,13 +3,13 @@ import { IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git';
 import { WikiV2 } from 'azure-devops-extension-api/Wiki';
 
-import WikiService from '../../../common/services/WikiService';
 import { mockGetRepository } from '../../../__mocks__/azure-devops-extension-api/Git';
 import {
   mockGetPageByIdText,
   mockGetWiki
 } from '../../../__mocks__/azure-devops-extension-api/Wiki';
 import { mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
+import WikiService from '../../../common/services/WikiService';
 
 describe('WikiService', () => {
   const validUrl =

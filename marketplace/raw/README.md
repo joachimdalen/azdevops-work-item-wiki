@@ -8,7 +8,7 @@
   <p align="center">
 Add static wiki pages to your work items
     <br />
-    <a href="https://github.com/joachimdalen/azdevops-work-item-wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://marketplace.visualstudio.com/items?itemName=joachimdalen.work-item-wiki">View Extension</a>
@@ -28,6 +28,12 @@ Work item wiki is a control to render a wikipage inside a work item page. This c
 Example where rendered on custom page:
 
 ![Product Name Screen Shot](marketplace/docs/images/bug-example.png)
+
+## Usage
+
+See [documenation](https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Supported Wiki Features
 
@@ -51,6 +57,8 @@ Example where rendered on custom page:
 | Query Results       | ❌                |
 | Task List           | ❌ (Display only) |
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Post Install Configuration
 
 Work Item Link is a custom form control that needs to be added to the Work Item Form. It can be added on an existing page, or as a new tab. For how to do this, refer to the [official documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/settings/work/custom-controls-process?view=azure-devops#add-a-field-level-contribution-or-custom-control).
@@ -59,6 +67,8 @@ Wiki Url is the url to the wiki page, it should look something like: `https://de
 
 | ![Config one](marketplace/docs/images/control-config-1.png) | ![Config two](marketplace/docs/images/control-config-2.png) |
 | ----------------------------------------------------------- | ----------------------------------------------------------- |
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contact
 

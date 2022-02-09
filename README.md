@@ -162,7 +162,7 @@ Wiki Url is the url to the wiki page, it should look something like: `https://de
 
 ## Usage
 
-See [documenation](./docs/index.md) for rule usage.
+See [documenation](https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

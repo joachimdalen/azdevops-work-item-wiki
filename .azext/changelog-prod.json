@@ -1,18 +1,15 @@
 [
   {
-    "publishDate": "07-01-2022",
-    "version": "0.0.5",
-    "modules": [
-      {
-        "name": "core",
-        "version": "0.0.5",
-        "changes": [
-          {
-            "description": "Updated manifest",
-            "type": "feature"
-          }
-        ]
-      }
-    ]
+    "version": "1.0.0",
+    "publishDate": "2022-02-09",
+    "sections": {
+      "summary": [
+        {
+          "type": "text",
+          "content": "Published extension"
+        }
+      ]
+    },
+    "modules": []
   }
 ]
