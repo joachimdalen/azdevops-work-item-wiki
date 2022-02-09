@@ -71,7 +71,7 @@
 
 Work item wiki is a control to render a wikipage inside a work item page. This can be useful if you need to document something for that work item type. For example definition of done/ready, bug categories etc.
 
-Example where rendered on the main tab:
+Example where rendered on custom page:
 
 ![Product Name Screen Shot][product-screenshot]
 
@@ -228,6 +228,6 @@ If you have generic questions about the project or usage you can make contact in
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[product-screenshot]: marketplace/docs/images/demo-form-control.png
+[product-screenshot]: marketplace/docs/images/bug-example.png
 [config-one]: marketplace/docs/images/control-config-1.png
 [config-two]: marketplace/docs/images/control-config-2.png

@@ -10,7 +10,7 @@
   "categories": ["Azure Boards"],
   "demands": ["api-version/5.1"],
   "tags": ["work item", "wiki", "work item wiki"],
-  "scopes": ["vso.wiki", "vso.code"],
+  "scopes": ["vso.wiki", "vso.code", "vso.work"],
   "icons": {
     "default": "extension-icon.png"
   },
@@ -26,7 +26,7 @@
       "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues"
     },
     "privacypolicy": {
-      "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/blob/master/PRIVACY.md"
+      "uri": "https://devops-extensions.github.io/docs/docs/privacy"
     },
     "license": {
       "uri": "https://github.com/joachimdalen/azdevops-work-item-wiki/blob/master/LICENSE"
@@ -57,7 +57,7 @@
   ],
   "screenshots": [
     {
-      "path": "marketplace/docs/images/demo-form-control.png"
+      "path": "marketplace/docs/images/bug-example.png"
     },
     {
       "path": "marketplace/docs/images/control-config-1.png"

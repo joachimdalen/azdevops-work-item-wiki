@@ -23,7 +23,42 @@ Add static wiki pages to your work items
 
 ## Features
 
-- Some feature
+Work item wiki is a control to render a wikipage inside a work item page. This can be useful if you need to document something for that work item type. For example definition of done/ready, bug categories etc.
+
+Example where rendered on custom page:
+
+![Product Name Screen Shot](marketplace/docs/images/bug-example.png)
+
+### Supported Wiki Features
+
+| Feature             | Supported         |
+| ------------------- | ----------------- |
+| Header (H1, H2, H3) | ✅                |
+| Italic              | ✅                |
+| Bold                | ✅                |
+| Link                | ✅                |
+| Attachment          | ✅                |
+| Image               | ✅                |
+| Code / Code Block   | ✅                |
+| Unordered list      | ✅                |
+| Ordered list        | ✅                |
+| Table               | ✅                |
+| Mermaid Diagram     | ❌                |
+| Work Item Mentions  | ❌                |
+| Table of Contents   | ❌                |
+| Formulas            | ❌                |
+| Mention             | ❌                |
+| Query Results       | ❌                |
+| Task List           | ❌ (Display only) |
+
+## Post Install Configuration
+
+Work Item Link is a custom form control that needs to be added to the Work Item Form. It can be added on an existing page, or as a new tab. For how to do this, refer to the [official documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/settings/work/custom-controls-process?view=azure-devops#add-a-field-level-contribution-or-custom-control).
+
+Wiki Url is the url to the wiki page, it should look something like: `https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page`
+
+| ![Config one](marketplace/docs/images/control-config-1.png) | ![Config two](marketplace/docs/images/control-config-2.png) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 ## Contact
 
