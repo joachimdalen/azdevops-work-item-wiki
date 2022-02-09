@@ -49,7 +49,7 @@
     "moduleChangesTitle": true,
     "githubIssues": false,
     "githubPullRequests": false,
-    "notes": true,
-    "summary": true
+    "sectionTitle": true,
+    "sectionContent": true
   }
 }

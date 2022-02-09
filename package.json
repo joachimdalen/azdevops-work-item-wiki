@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "devDependencies": {
-    "@joachimdalen/azext": "^0.3.0",
+    "@joachimdalen/azext": "^0.5.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
@@ -78,7 +78,7 @@
       "^.+\\.(js|ts|tsx|jsx)$": "ts-jest"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(azure-devops-ui|azure-devops-extension-sdk|azure-devops-extension-api|react-markdown|@joachimdalen\/azdevops-ext-core)/)"
+      "node_modules/(?!(azure-devops-ui|azure-devops-extension-sdk|azure-devops-extension-api|react-markdown|@joachimdalen/azdevops-ext-core)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js",
