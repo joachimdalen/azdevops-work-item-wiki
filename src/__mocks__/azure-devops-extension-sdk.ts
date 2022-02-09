@@ -4,10 +4,10 @@ import {
   IWorkItemLoadedArgs,
   WorkItemTrackingServiceIds
 } from 'azure-devops-extension-api/WorkItemTracking';
-import WorkItemListener from '../wi-control/WorkItemListener';
 import { IExtensionContext } from 'azure-devops-extension-sdk';
 export const mockInit = jest.fn();
 export const mockRegister = jest.fn();
+export const mockGetContributionId = jest.fn().mockReturnValue('someContributionId');
 /**
  * This is a minimal mock version to test WorkItemFormGroup
  * for additional mocks please look here:
@@ -25,14 +25,14 @@ export function init(): Promise<void> {
  * Mocked getContributionId returns some Id
  */
 export function getContributionId() {
-  return 'someContributionId';
+  return mockGetContributionId();
 }
 
 /**
  * Type and Accessor for WorkItem events
  */
 // tslint:disable-next-line: class-name
-type workItemCallBackType = () => {
+type workItemCallBackType = {
   // tslint:disable-next-line: completed-docs
   onFieldChanged: (args: IWorkItemFieldChangedArgs) => Promise<void>;
   // tslint:disable-next-line: completed-docs
@@ -53,7 +53,7 @@ export let spyWorkItemCallBackAccessor: workItemCallBackType;
  * Mocked register returns empty data structure
  */
 export function register(instanceId: string, instance: any) {
-  if (typeof instance === typeof WorkItemListener) {
+  if (instanceId.indexOf('work-item-wiki-control') > -1) {
     spyWorkItemCallBackAccessor = instance;
   }
 
@@ -112,6 +112,7 @@ export const mockGetExtensionContext = jest.fn().mockReturnValue({
   extensionId: 'work-item-wiki',
   version: '0.1.1'
 });
+export const mockNotifyLoadFailed = jest.fn();
 
 export function resize(width?: number, height?: number) {
   mockResize(width, height);
@@ -128,4 +129,7 @@ export function getConfiguration() {
 }
 export function getExtensionContext(): IExtensionContext {
   return mockGetExtensionContext();
+}
+export function notifyLoadFailed(e: Error | string): Promise<void> {
+  return new Promise(resolve => resolve(mockNotifyLoadFailed(e)));
 }

@@ -61,4 +61,28 @@ describe('WikiService', () => {
       expect(content).toEqual('### Hello');
     });
   });
+
+  describe('transformAttachmentUrl', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should passed url when base is not set', async () => {
+      const service = new WikiService();
+      expect(service.transformAttachmentUrl('/.attachments/path')).toEqual('/.attachments/path');
+    });
+    it('should passed url when passed is not attachment', async () => {
+      const service = new WikiService();
+      expect(service.transformAttachmentUrl('/.some/path')).toEqual('/.some/path');
+    });
+    it('should return full url when valid', async () => {
+      const service = new WikiService();
+      const base = 'https://repo.localhost.text';
+      service.setBaseUrl(base);
+      const attachment = '/.attachments/file.txt';
+      expect(service.transformAttachmentUrl(attachment)).toEqual(
+        `${base}/Items?path=${attachment}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`
+      );
+    });
+  });
 });

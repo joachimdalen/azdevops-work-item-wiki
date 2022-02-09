@@ -31,7 +31,7 @@ class WikiService implements IWikiService {
     const wikiDef = await this._wikiClient.getWiki(wiki.name, project.id);
 
     const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, project.name);
-    this._wikiRepoUrl = wikiRepo.url;
+    this.setBaseUrl(wikiRepo.url);
 
     const wikiContent = await this._wikiClient.getPageByIdText(
       project.name,
@@ -41,6 +41,10 @@ class WikiService implements IWikiService {
       true
     );
     return wikiContent;
+  }
+
+  public setBaseUrl(url: string): void {
+    this._wikiRepoUrl = url;
   }
 
   public transformAttachmentUrl(url: string): string {

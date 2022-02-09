@@ -5,6 +5,13 @@ import {
   useResizeTimeout,
   webLogger
 } from '@joachimdalen/azdevops-ext-core';
+import {
+  IWorkItemChangedArgs,
+  IWorkItemFieldChangedArgs,
+  IWorkItemFormNavigationService,
+  IWorkItemLoadedArgs,
+  IWorkItemNotificationListener
+} from 'azure-devops-extension-api/WorkItemTracking';
 import * as DevOps from 'azure-devops-extension-sdk';
 import { ZeroData } from 'azure-devops-ui/ZeroData';
 import { useEffect, useMemo, useState } from 'react';
@@ -13,7 +20,6 @@ import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import WikiService from '../common/services/WikiService';
-import WorkItemListener from './WorkItemListener';
 
 interface WitInputs {
   wikiUrl: string;
@@ -21,10 +27,18 @@ interface WitInputs {
 
 const WorkItemWikiControl = (): JSX.Element => {
   const [content, setContent] = useState<string | undefined>();
-
   const [loading, toggle] = useBooleanToggle(true);
   useResizeTimeout(5000);
   const [wikiService] = useMemo(() => [new WikiService()], []);
+
+  const provider = useMemo(() => {
+    const listener: Partial<IWorkItemNotificationListener> = {
+      onRefreshed: async function (refreshEventArgs: IWorkItemChangedArgs): Promise<void> {
+        await loadWikiPage();
+      }
+    };
+    return listener;
+  }, []);
 
   async function loadWikiPage() {
     toggle(true);
@@ -45,7 +59,7 @@ const WorkItemWikiControl = (): JSX.Element => {
         });
         webLogger.debug('Loading work item control...');
         await DevOps.ready();
-        DevOps.register(DevOps.getContributionId(), new WorkItemListener());
+        DevOps.register(DevOps.getContributionId(), provider);
 
         await loadWikiPage();
 

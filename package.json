@@ -43,7 +43,7 @@
   "dependencies": {
     "@fluentui/react": "^8.42.4",
     "@fluentui/react-hooks": "^8.3.6",
-    "@joachimdalen/azdevops-ext-core": "file:../azdevops-ext-core",
+    "@joachimdalen/azdevops-ext-core": "^0.2.0",
     "azure-devops-extension-api": "^1.158.0",
     "azure-devops-ui": "^2.167.22",
     "react": "^16.14.0",
@@ -80,11 +80,13 @@
       "^.+\\.(js|ts|tsx|jsx)$": "ts-jest"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(azure-devops-ui|azure-devops-extension-sdk|azure-devops-extension-api)/)"
+      "node_modules/(?!(azure-devops-ui|azure-devops-extension-sdk|azure-devops-extension-api|react-markdown|@joachimdalen\/azdevops-ext-core)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/src/__mocks__/styleMock.js"
+      "\\.(css|less|scss)$": "<rootDir>/src/__mocks__/styleMock.js",
+      "react-markdown": "<rootDir>/src/__mocks__/react-markdown.tsx",
+      "remark-*": "<rootDir>/src/__mocks__/remark-plugin.ts"
     },
     "preset": "ts-jest/presets/js-with-babel",
     "testResultsProcessor": "./node_modules/jest-junit-reporter",
