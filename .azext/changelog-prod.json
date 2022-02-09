@@ -1,0 +1,15 @@
+[
+  {
+    "version": "1.0.0",
+    "publishDate": "2022-02-09",
+    "sections": {
+      "summary": [
+        {
+          "type": "text",
+          "content": "Published extension"
+        }
+      ]
+    },
+    "modules": []
+  }
+]

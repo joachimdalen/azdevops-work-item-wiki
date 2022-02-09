@@ -1,0 +1,146 @@
+@import 'azure-devops-ui/Core/override.css';
+@import 'azure-devops-ui/Core/_platformCommon.scss';
+@import '@joachimdalen/azdevops-ext-core/dist/styles/mixins.scss';
+
+@include extension-container('wi-control-container');
+
+.rendered-markdown-content {
+  color: var(--text-primary-color, rgba(0, 0, 0, 0.9));
+  word-wrap: break-word;
+  font-size: $fontSizeMM;
+
+  a {
+    color: var(--communication-foreground, rgba(0, 90, 158, 1));
+    outline: transparent;
+    &:hover {
+      color: rgba(0, 69, 120, 1);
+      color: rgba(var(--palette-primary-shade-30, 0, 69, 120), 1);
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: $fontWeightSemiBold;
+    color: var(--text-primary-color, rgba(0, 0, 0, 0.9));
+
+    margin: 24px 0 8px 0;
+  }
+  h1 {
+    font-size: $fontSizeLL;
+  }
+  h2 {
+    font-size: $fontSizeML;
+  }
+  h3 {
+    font-size: $fontSizeMM;
+  }
+  h4 {
+    font-size: $fontSizeM;
+  }
+  h5,
+  h6 {
+    font-size: $fontSize;
+  }
+
+  table {
+    margin-bottom: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    color: var(--text-primary-color, rgba(0, 0, 0, 0.9));
+    cursor: default;
+    display: block;
+    overflow-x: auto;
+
+    th {
+      color: var(--text-secondary-color, rgba(0, 0, 0, 0.55));
+      font-size: $fontSizeMM;
+      font-weight: $fontWeightSemiBold;
+      text-align: left;
+      border: 1px solid var(--component-grid-cell-bottom-border-color, rgba(234, 234, 234, 1));
+      padding: 13px 11px;
+    }
+    td {
+      border: 1px solid var(--component-grid-cell-bottom-border-color, rgba(234, 234, 234, 1));
+      text-align: left;
+      padding: 10px 13px;
+      min-width: 50px;
+      max-width: 1000px;
+    }
+  }
+  hr {
+    border: 1px solid var(--component-grid-cell-bottom-border-color, rgba(234, 234, 234, 1));
+  }
+  p,
+  blockquote,
+  ul,
+  ol,
+  table,
+  pre {
+    margin: 0 0 $spacing-16 0;
+  }
+
+  code {
+    font-family: Menlo, Consolas, Courier New, monospace;
+    font-size: $fontSize;
+    background-color: var(--palette-black-alpha-6, rgba(0, 0, 0, 0.06));
+    color: var(--text-primary-color, rgba(0, 0, 0, 0.9));
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
+
+  pre {
+    font-size: $fontSize;
+    white-space: pre;
+    word-wrap: normal;
+    background-color: var(--palette-black-alpha-6, rgba(0, 0, 0, 0.06));
+    border-radius: 2px;
+    padding: $spacing-16;
+    overflow-x: auto;
+    code {
+      font-size: inherit;
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+  blockquote {
+    color: var(--palette-black-alpha-70, rgba(0, 0, 0, 0.7));
+    border-left: 2px solid var(--component-grid-cell-bottom-border-color, rgba(234, 234, 234, 1));
+    padding-left: $spacing-16;
+    > *:first-child {
+      margin-top: 0;
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+    > p,
+    ol,
+    ul {
+      margin: $spacing-16 0;
+    }
+  }
+  img {
+    max-width: 100%;
+  }
+  ul,
+  ol {
+    padding-left: $spacing-32;
+  }
+  
+  ul ul,
+  ul ol,
+  ol ul,
+  ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  li {
+    list-style: inherit;
+  }
+  li + li {
+    margin-top: 4px;
+  }
+}

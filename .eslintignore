@@ -1,0 +1,8 @@
+**/dist/**
+**/build/**
+**/node_modules/**
+webpack.config.js
+ci/**
+docs/**
+marketplace/**
+**/__mocks__/**
