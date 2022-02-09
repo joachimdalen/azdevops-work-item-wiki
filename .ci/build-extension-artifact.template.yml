@@ -38,7 +38,7 @@ jobs:
         displayName: 'Build changelog'
         inputs:
           command: custom
-          customCommand: run changelog:${{ parameters.extensionEnv }}
+          customCommand: run changelog
       - task: Npm@1
         displayName: 'Build single version changelog'
         condition: eq(${{ parameters.generateVersionChangelog }}, true)
