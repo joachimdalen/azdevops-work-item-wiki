@@ -25,7 +25,7 @@
 </div>
 
 <div align="center">
-  <img alt="Azure DevOps builds" src="https://img.shields.io/azure-devops/build/dalenapps/6531387f-baea-443c-a284-0d0e786e56c3/43?color=0078d7&label=Master%20Build&logo=azure-devops&style=flat-square">
+  <img alt="Azure DevOps builds" src="https://img.shields.io/azure-devops/build/dalenapps/6531387f-baea-443c-a284-0d0e786e56c3/45?color=0078d7&label=Master%20Build&logo=azure-devops&style=flat-square">
   <img alt="Issues" src="https://img.shields.io/github/issues/joachimdalen/azdevops-work-item-wiki.svg?style=flat-square">
   <img alt="License" src="https://img.shields.io/github/license/joachimdalen/azdevops-work-item-wiki?style=flat-square">
 </div>
