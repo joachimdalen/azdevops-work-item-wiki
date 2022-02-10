@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.0.1",
+    "publishDate": "2022-02-10",
+    "changes": [
+      {
+        "type": "docs",
+        "description": "Fix image paths"
+      }
+    ]
+  },
+  {
     "version": "1.0.0",
     "publishDate": "2022-02-10",
     "sections": {

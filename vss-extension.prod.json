@@ -5,7 +5,7 @@
   "name": "Work Item Wiki",
   "publisher": "JoachimDalen",
   "public": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Add static wiki pages to your work items",
   "categories": ["Azure Boards"],
   "demands": ["api-version/5.1"],
@@ -47,6 +47,10 @@
     }
   ],
   "files": [
+    {
+      "path": "marketplace/docs/images",
+      "addressable": true
+    },
     {
       "path": "dist",
       "addressable": true
