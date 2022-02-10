@@ -5,6 +5,7 @@
 ### 📝 Documentation (1)
 
 - Fix image paths
+  - Pull Request: [PR#2 - Release fixes](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/2)
 
 ---
 

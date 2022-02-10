@@ -1,4 +1,12 @@
 {
   "issues": [],
-  "pullRequests": []
+  "pullRequests": [
+    {
+      "id": 845597770,
+      "number": 2,
+      "submitter": "joachimdalen",
+      "title": "Release fixes",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/2"
+    }
+  ]
 }

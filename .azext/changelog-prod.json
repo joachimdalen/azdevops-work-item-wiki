@@ -5,7 +5,8 @@
     "changes": [
       {
         "type": "docs",
-        "description": "Fix image paths"
+        "description": "Fix image paths",
+        "pullRequest": 2
       }
     ]
   },
