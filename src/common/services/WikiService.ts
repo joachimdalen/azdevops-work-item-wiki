@@ -1,10 +1,9 @@
-import { DevOpsService, IDevOpsService } from '@joachimdalen/azdevops-ext-core/DevOpsService';
 import { getClient } from 'azure-devops-extension-api';
 import { GitRestClient, VersionControlRecursionType } from 'azure-devops-extension-api/Git';
 import { WikiRestClient } from 'azure-devops-extension-api/Wiki';
 import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTracking';
-
 import * as DevOps from 'azure-devops-extension-sdk';
+
 import { IWikiPage, parseWikiUrl } from '..';
 
 interface IWikiService {
@@ -14,13 +13,11 @@ interface IWikiService {
 class WikiService implements IWikiService {
   private _gitClient: GitRestClient;
   private _wikiClient: WikiRestClient;
-  private _devOpsService: IDevOpsService;
   private _wikiRepoUrl?: string;
 
   constructor() {
     this._wikiClient = getClient(WikiRestClient);
     this._gitClient = getClient(GitRestClient);
-    this._devOpsService = new DevOpsService();
   }
 
   public async getProjectForWorkItem(): Promise<string | undefined> {
@@ -29,11 +26,11 @@ class WikiService implements IWikiService {
         'ms.vss-work-web.work-item-form'
       );
 
-      const id = await formService.getFieldValue('System.TeamProject', {
+      const projectName = await formService.getFieldValue('System.TeamProject', {
         returnOriginalValue: true
       });
 
-      return id as string;
+      return projectName as string;
     } catch {
       return undefined;
     }

@@ -6,7 +6,8 @@
       {
         "type": "fix",
         "description": "Fixed an issue where opening the work item from a different project would result in an error",
-        "issue": 4
+        "issue": 4,
+        "pullRequest": 5
       }
     ]
   },

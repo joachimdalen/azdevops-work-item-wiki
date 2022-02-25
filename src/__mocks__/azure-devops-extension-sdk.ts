@@ -64,6 +64,7 @@ export function register(instanceId: string, instance: any) {
  * Accessors to Mocked getService methods
  */
 export const mockSetFieldValue = jest.fn();
+export const mockGetFieldValue = jest.fn();
 export const mockGetProject = jest.fn();
 export const mockAddToast = jest.fn();
 export const mockOpenPanel = jest.fn();
@@ -77,7 +78,8 @@ export function getService(contributionId: string) {
     case WorkItemTrackingServiceIds.WorkItemFormService:
       return {
         // WorkItemFormService
-        setFieldValue: mockSetFieldValue
+        setFieldValue: mockSetFieldValue,
+        getFieldValue: mockGetFieldValue
       };
     case 'ms.vss-tfs-web.tfs-page-data-service': {
       return {
