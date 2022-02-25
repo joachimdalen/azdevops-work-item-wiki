@@ -1,7 +1,8 @@
-import { DevOpsService, IDevOpsService } from '@joachimdalen/azdevops-ext-core';
 import { getClient } from 'azure-devops-extension-api';
 import { GitRestClient, VersionControlRecursionType } from 'azure-devops-extension-api/Git';
 import { WikiRestClient } from 'azure-devops-extension-api/Wiki';
+import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTracking';
+import * as DevOps from 'azure-devops-extension-sdk';
 
 import { IWikiPage, parseWikiUrl } from '..';
 
@@ -12,29 +13,43 @@ interface IWikiService {
 class WikiService implements IWikiService {
   private _gitClient: GitRestClient;
   private _wikiClient: WikiRestClient;
-  private _devOpsService: IDevOpsService;
   private _wikiRepoUrl?: string;
 
   constructor() {
     this._wikiClient = getClient(WikiRestClient);
     this._gitClient = getClient(GitRestClient);
-    this._devOpsService = new DevOpsService();
+  }
+
+  public async getProjectForWorkItem(): Promise<string | undefined> {
+    try {
+      const formService = await DevOps.getService<IWorkItemFormService>(
+        'ms.vss-work-web.work-item-form'
+      );
+
+      const projectName = await formService.getFieldValue('System.TeamProject', {
+        returnOriginalValue: true
+      });
+
+      return projectName as string;
+    } catch {
+      return undefined;
+    }
   }
 
   public async loadWikiPage(url: string): Promise<string | undefined> {
     const wiki: IWikiPage | undefined = parseWikiUrl(url);
     if (wiki === undefined) return;
 
-    const project = await this._devOpsService.getProject();
+    const project = await this.getProjectForWorkItem();
     if (project === undefined) return;
 
-    const wikiDef = await this._wikiClient.getWiki(wiki.name, project.id);
+    const wikiDef = await this._wikiClient.getWiki(wiki.name, project);
 
-    const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, project.name);
+    const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, project);
     this.setBaseUrl(wikiRepo.url);
 
     const wikiContent = await this._wikiClient.getPageByIdText(
-      project.name,
+      project,
       wiki.name,
       wiki.id,
       VersionControlRecursionType.Full,

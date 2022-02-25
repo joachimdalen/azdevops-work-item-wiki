@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.0.2",
+    "publishDate": "2022-02-25",
+    "changes": [
+      {
+        "type": "fix",
+        "description": "Fixed an issue where opening the work item from a different project would result in an error",
+        "issue": 4,
+        "pullRequest": 5
+      }
+    ]
+  },
+  {
     "version": "1.0.1",
     "publishDate": "2022-02-10",
     "changes": [

@@ -1,4 +1,3 @@
-import { DevOpsService, WorkItemService } from '@joachimdalen/azdevops-ext-core';
 import { IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git';
 import { WikiV2 } from 'azure-devops-extension-api/Wiki';
@@ -8,9 +7,9 @@ import {
   mockGetPageByIdText,
   mockGetWiki
 } from '../../../__mocks__/azure-devops-extension-api/Wiki';
-import { mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
+import { mockGetFieldValue, mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
 import WikiService from '../../../common/services/WikiService';
-
+jest.mock('azure-devops-extension-api');
 describe('WikiService', () => {
   const validUrl =
     'https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page';
@@ -31,17 +30,14 @@ describe('WikiService', () => {
     });
 
     it('should return undefined when failing to get project', async () => {
-      // const getProjectSpy = jest
-      //   .spyOn(DevOpsService.prototype, 'getProject')
-      //   .mockResolvedValue(undefined);
       mockGetProject.mockResolvedValue(undefined);
       const service = new WikiService();
       const content = await service.loadWikiPage(validUrl);
       expect(content).toBeUndefined();
     });
 
-    it('should return undefined when failing to get project', async () => {
-      mockGetProject.mockResolvedValue(project);
+    it('should return content', async () => {
+      mockGetFieldValue.mockResolvedValue(project.name);
       const wiki: Partial<WikiV2> = {
         id: 'demo-project.wiki',
         name: 'Demo project wiki',
@@ -56,7 +52,7 @@ describe('WikiService', () => {
 
       const service = new WikiService();
       const content = await service.loadWikiPage(validUrl);
-      expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', project.id);
+      expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', project.name);
       expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, project.name);
       expect(content).toEqual('### Hello');
     });

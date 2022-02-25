@@ -1,6 +1,21 @@
 {
-  "issues": [],
+  "issues": [
+    {
+      "id": 1150484868,
+      "number": 4,
+      "submitter": "joachimdalen",
+      "title": "Opening a work item in a different project fails",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues/4"
+    }
+  ],
   "pullRequests": [
+    {
+      "id": 863543333,
+      "number": 5,
+      "submitter": "joachimdalen",
+      "title": "Fix loading work item from a different project",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/5"
+    },
     {
       "id": 845597770,
       "number": 2,
