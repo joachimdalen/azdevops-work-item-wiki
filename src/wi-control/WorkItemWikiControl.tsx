@@ -1,15 +1,10 @@
-import {
-  ErrorBoundary,
-  LoadingSection,
-  useBooleanToggle,
-  useResizeTimeout,
-  webLogger
-} from '@joachimdalen/azdevops-ext-core';
+import { ErrorBoundary } from '@joachimdalen/azdevops-ext-core/ErrorBoundary';
+import { LoadingSection } from '@joachimdalen/azdevops-ext-core/LoadingSection';
+import { useBooleanToggle } from '@joachimdalen/azdevops-ext-core/useBooleanToggle';
+import { useResizeTimeout } from '@joachimdalen/azdevops-ext-core/useResizeTimeout';
+import { WebLogger } from '@joachimdalen/azdevops-ext-core/WebLogger';
 import {
   IWorkItemChangedArgs,
-  IWorkItemFieldChangedArgs,
-  IWorkItemFormNavigationService,
-  IWorkItemLoadedArgs,
   IWorkItemNotificationListener
 } from 'azure-devops-extension-api/WorkItemTracking';
 import * as DevOps from 'azure-devops-extension-sdk';
@@ -57,7 +52,7 @@ const WorkItemWikiControl = (): JSX.Element => {
           loaded: false,
           applyTheme: true
         });
-        webLogger.debug('Loading work item control...');
+        WebLogger.debug('Loading work item control...');
         await DevOps.ready();
         DevOps.register(DevOps.getContributionId(), provider);
 
@@ -66,7 +61,7 @@ const WorkItemWikiControl = (): JSX.Element => {
         await DevOps.notifyLoadSucceeded();
         DevOps.resize();
       } catch (error) {
-        webLogger.error('Failed to get project configuration', error);
+        WebLogger.error('Failed to get project configuration', error);
         await DevOps.notifyLoadFailed('Failed to load');
       } finally {
         toggle(false);

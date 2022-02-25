@@ -1,4 +1,3 @@
-import { DevOpsService, WorkItemService } from '@joachimdalen/azdevops-ext-core';
 import { IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git';
 import { WikiV2 } from 'azure-devops-extension-api/Wiki';
