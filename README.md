@@ -11,7 +11,7 @@
   <p align="center">
     Add static wiki pages to your work items
     <br />
-    <a href="https://github.com/joachimdalen/azdevops-work-item-wiki/blob/master/docs/index.md"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.devops-extensions.dev/docs/extensions/work-item-wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://marketplace.visualstudio.com/items?itemName=joachimdalen.work-item-wiki">View Extension</a>
@@ -162,7 +162,7 @@ Wiki Url is the url to the wiki page, it should look something like: `https://de
 
 ## Usage
 
-See [documenation](https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki).
+See [documenation](https://docs.devops-extensions.dev/docs/extensions/work-item-wiki).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
