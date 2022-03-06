@@ -10,6 +10,13 @@
   ],
   "pullRequests": [
     {
+      "id": 872391543,
+      "number": 6,
+      "submitter": "joachimdalen",
+      "title": "Update documentation urls",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/6"
+    },
+    {
       "id": 863543333,
       "number": 5,
       "submitter": "joachimdalen",
