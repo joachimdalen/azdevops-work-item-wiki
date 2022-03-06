@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.3 (2022-03-06)
+
+### 📝 Documentation (1)
+
+- Updated documentation urls
+  - Pull Request: [PR#6 - Update documentation urls](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/6)
+
+---
+
 ## 1.0.2 (2022-02-25)
 
 ### 🐛 Fixes (1)
@@ -24,5 +33,7 @@
 #### 💬 Summary
 
 Published extension
+
+---
 
 ---

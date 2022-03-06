@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.0.3",
+    "publishDate": "2022-03-06",
+    "changes": [
+      {
+        "type": "docs",
+        "description": "Updated documentation urls",
+        "pullRequest": 6
+      }
+    ]
+  },
+  {
     "version": "1.0.2",
     "publishDate": "2022-02-25",
     "changes": [

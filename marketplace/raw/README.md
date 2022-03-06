@@ -8,7 +8,7 @@
   <p align="center">
 Add static wiki pages to your work items
     <br />
-    <a href="https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.devops-extensions.dev/docs/extensions/work-item-wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://marketplace.visualstudio.com/items?itemName=joachimdalen.work-item-wiki">View Extension</a>
@@ -31,7 +31,7 @@ Example where rendered on custom page:
 
 ## Usage
 
-See [documenation](https://devops-extensions.github.io/docs/docs/extensions/work-item-wiki).
+See [documenation](https://docs.devops-extensions.dev/docs/extensions/work-item-wiki).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
