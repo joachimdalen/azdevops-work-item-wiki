@@ -10,6 +10,13 @@
   ],
   "pullRequests": [
     {
+      "id": 887657502,
+      "number": 9,
+      "submitter": "joachimdalen",
+      "title": "Fix for resolving wikis from projects with space in the name",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/9"
+    },
+    {
       "id": 887635925,
       "number": 8,
       "submitter": "joachimdalen",

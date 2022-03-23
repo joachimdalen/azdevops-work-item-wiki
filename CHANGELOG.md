@@ -5,6 +5,7 @@
 ### 🐛 Fixes (1)
 
 - Fix for projects where the name contains a space
+  - Fixed in: [PR#9 - Fix for resolving wikis from projects with space in the name](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/9)
 
 ---
 

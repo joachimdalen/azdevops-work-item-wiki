@@ -5,7 +5,8 @@
     "changes": [
       {
         "type": "fix",
-        "description": "Fix for projects where the name contains a space"
+        "description": "Fix for projects where the name contains a space",
+        "pullRequest": 9
       }
     ]
   },
