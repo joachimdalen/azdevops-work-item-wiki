@@ -10,6 +10,13 @@
   ],
   "pullRequests": [
     {
+      "id": 887635925,
+      "number": 8,
+      "submitter": "joachimdalen",
+      "title": "Implement support for referencing wikis in a different project",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/8"
+    },
+    {
       "id": 872391543,
       "number": 6,
       "submitter": "joachimdalen",

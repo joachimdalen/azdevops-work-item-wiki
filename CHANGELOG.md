@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0 (2022-03-23)
+
+### 🚀 Features (1)
+
+- Add support for referencing wikis in a different project
+  - Implemented in: [PR#8 - Implement support for referencing wikis in a different project](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/8)
+
+---
+
 ## 1.0.4 (2022-03-23)
 
 ### 🐛 Fixes (1)

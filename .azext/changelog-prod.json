@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.1.0",
+    "publishDate": "2022-03-23",
+    "changes": [
+      {
+        "type": "feature",
+        "description": "Add support for referencing wikis in a different project",
+        "pullRequest": 8
+      }
+    ]
+  },
+  {
     "version": "1.0.4",
     "publishDate": "2022-03-23",
     "changes": [
