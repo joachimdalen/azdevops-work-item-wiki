@@ -5,7 +5,7 @@ export interface IWikiPage {
 }
 
 export const parseWikiUrl = (url: string): IWikiPage | undefined => {
-  const expression = /_wiki\/wikis\/(?<wikiName>.+)\/(?<wikiId>\d)\/(?<wikiPath>.+)/gm;
+  const expression = /_wiki\/wikis\/(?<wikiName>.+)\/(?<wikiId>\d+)\/(?<wikiPath>.+)/gm;
   let m;
 
   while ((m = expression.exec(url)) !== null) {

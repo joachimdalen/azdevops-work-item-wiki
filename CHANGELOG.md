@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.4 (2022-03-23)
+
+### 🐛 Fixes (1)
+
+- Fixed an issue where the extension would fail to resolve the wiki url when the id of the page is greater than 9
+
+---
+
 ## 1.0.3 (2022-03-06)
 
 ### 📝 Documentation (1)
