@@ -81,7 +81,7 @@ class WikiService implements IWikiService {
     if (wikiDef === undefined) {
       const project = await this.getProjectForWorkItem();
       if (project !== undefined) {
-        wikiDef = await this._wikiClient.getWiki(wiki.name, project);
+        wikiDef = await this.tryGetWiki(wiki.name, project);
         projectName = project;
       }
     }
