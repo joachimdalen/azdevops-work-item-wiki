@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1 (2022-03-23)
+
+### 🐛 Fixes (1)
+
+- Fix for projects where the name contains a space
+  - Fixed in: [PR#9 - Fix for resolving wikis from projects with space in the name](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/9)
+
+---
+
 ## 1.1.0 (2022-03-23)
 
 ### 🚀 Features (1)

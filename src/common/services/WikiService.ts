@@ -70,12 +70,18 @@ class WikiService implements IWikiService {
 
     if (wiki.projectName !== undefined) {
       wikiDef = await this.tryGetWiki(wiki.name, wiki.projectName);
+
+      if (wikiDef === undefined && wiki.projectName.indexOf('-') > 0) {
+        const spaceProject = wiki.projectName.replaceAll('-', ' ');
+        wikiDef = await this.tryGetWiki(wiki.name, spaceProject);
+        projectName = spaceProject;
+      }
     }
 
     if (wikiDef === undefined) {
       const project = await this.getProjectForWorkItem();
       if (project !== undefined) {
-        wikiDef = await this._wikiClient.getWiki(wiki.name, project);
+        wikiDef = await this.tryGetWiki(wiki.name, project);
         projectName = project;
       }
     }
