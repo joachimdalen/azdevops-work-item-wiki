@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.1 (2022-03-23)
+
+### 🐛 Fixes (1)
+
+- Fix for projects where the name contains a space
+
+---
+
 ## 1.1.0 (2022-03-23)
 
 ### 🚀 Features (1)

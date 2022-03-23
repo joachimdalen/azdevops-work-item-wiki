@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.1.1",
+    "publishDate": "2022-03-23",
+    "changes": [
+      {
+        "type": "fix",
+        "description": "Fix for projects where the name contains a space"
+      }
+    ]
+  },
+  {
     "version": "1.1.0",
     "publishDate": "2022-03-23",
     "changes": [
