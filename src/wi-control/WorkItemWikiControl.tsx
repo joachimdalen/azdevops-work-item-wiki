@@ -14,14 +14,58 @@ import ReactMarkdown from 'react-markdown';
 import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
-import WikiService from '../common/services/WikiService';
+import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
 
 interface WitInputs {
   wikiUrl: string;
 }
 
+interface WikiResultText {
+  title: string;
+  description: string;
+}
+
+const getResult = (result?: WikiResult): WikiResultText | undefined => {
+  if (result === undefined) {
+    return {
+      title: 'Unknwon failure',
+      description:
+        'An unknown failure happened. Please check the browser console for errors and submit an issue'
+    };
+  }
+  switch (result.result) {
+    case WikiResultCode.ParseFailure: {
+      return {
+        title: 'Failed to parse url',
+        description: 'Failed to parse the provided wiki url. Ensure it is correctly configured'
+      };
+    }
+    case WikiResultCode.FailedToResolve: {
+      return {
+        title: 'Failed to resolve project',
+        description:
+          'Failed to resolve the project for the wiki. Please specify the project in control options'
+      };
+    }
+    case WikiResultCode.FailedToFindContent: {
+      return {
+        title: 'Failed to find content',
+        description:
+          'Failed to find any content for the provided wiki page. Ensure the page exists and that it has content'
+      };
+    }
+    case WikiResultCode.UnknownFailure: {
+      return {
+        title: 'Unknwon failure',
+        description:
+          'An unknown failure happened. Please check the browser console for errors and submit an issue'
+      };
+    }
+  }
+};
+
 const WorkItemWikiControl = (): JSX.Element => {
-  const [content, setContent] = useState<string | undefined>();
+  const [result, setResult] = useState<WikiResult>();
   const [loading, toggle] = useBooleanToggle(true);
   useResizeTimeout(5000);
   const [wikiService] = useMemo(() => [new WikiService()], []);
@@ -38,10 +82,8 @@ const WorkItemWikiControl = (): JSX.Element => {
   async function loadWikiPage() {
     toggle(true);
     const config: WitInputs = DevOps.getConfiguration().witInputs;
-    const content = await wikiService.loadWikiPage(config.wikiUrl);
-    if (content) {
-      setContent(content);
-    }
+    const loadResult: WikiResult = await wikiService.loadWikiPage(config.wikiUrl);
+    setResult(loadResult);
     toggle(false);
   }
 
@@ -91,15 +133,17 @@ const WorkItemWikiControl = (): JSX.Element => {
     );
   }
 
-  if (content === undefined)
+  if (result?.result !== WikiResultCode.Success) {
+    const details = getResult(result);
     return (
       <ZeroData
         imageAltText={''}
         iconProps={{ iconName: 'Page' }}
-        primaryText="Wiki Not Found"
-        secondaryText="Failed to resolve Wiki page. Ensure the configured url is correct and that the wiki page exists"
+        primaryText={details?.title}
+        secondaryText={details?.description}
       />
     );
+  }
 
   return (
     <ErrorBoundary>
@@ -110,7 +154,7 @@ const WorkItemWikiControl = (): JSX.Element => {
             transformImageUri={transformImageUrls}
             transformLinkUri={transformLinkUri}
           >
-            {content}
+            {result?.content || 'No content'}
           </ReactMarkdown>
         </div>
       </div>

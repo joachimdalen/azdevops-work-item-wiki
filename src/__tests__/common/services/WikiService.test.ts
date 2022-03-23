@@ -8,7 +8,7 @@ import {
   mockGetWiki
 } from '../../../__mocks__/azure-devops-extension-api/Wiki';
 import { mockGetFieldValue, mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
-import WikiService from '../../../common/services/WikiService';
+import WikiService, { WikiResultCode } from '../../../common/services/WikiService';
 jest.mock('azure-devops-extension-api');
 describe('WikiService', () => {
   const validUrl =
@@ -16,7 +16,7 @@ describe('WikiService', () => {
   const invalidUrl = 'https://google.com';
   const project: IProjectInfo = {
     id: '5395360b-3cb4-456c-acb8-b2107d72395e',
-    name: 'Demo Project'
+    name: 'demo-project'
   };
   describe('loadWikiPage', () => {
     beforeEach(() => {
@@ -25,15 +25,17 @@ describe('WikiService', () => {
 
     it('should return undefined when unknown url', async () => {
       const service = new WikiService();
-      const content = await service.loadWikiPage(invalidUrl);
-      expect(content).toBeUndefined();
+      const result = await service.loadWikiPage(invalidUrl);
+      expect(result.content).toBeUndefined();
+      expect(result.result).toEqual(WikiResultCode.ParseFailure);
     });
 
     it('should return undefined when failing to get project', async () => {
       mockGetProject.mockResolvedValue(undefined);
       const service = new WikiService();
-      const content = await service.loadWikiPage(validUrl);
-      expect(content).toBeUndefined();
+      const result = await service.loadWikiPage(validUrl);
+      expect(result.content).toBeUndefined();
+      expect(result.result).toEqual(WikiResultCode.FailedToResolve);
     });
 
     it('should return content', async () => {
@@ -51,10 +53,11 @@ describe('WikiService', () => {
       mockGetPageByIdText.mockResolvedValue('### Hello');
 
       const service = new WikiService();
-      const content = await service.loadWikiPage(validUrl);
+      const result = await service.loadWikiPage(validUrl);
       expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', project.name);
       expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, project.name);
-      expect(content).toEqual('### Hello');
+      expect(result.content).toEqual('### Hello');
+      expect(result.result).toEqual(WikiResultCode.Success);
     });
   });
 

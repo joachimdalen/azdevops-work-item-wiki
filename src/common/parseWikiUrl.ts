@@ -2,6 +2,7 @@ export interface IWikiPage {
   name: string;
   id: number;
   path: string;
+  projectName?: string;
 }
 
 export const parseWikiUrl = (url: string): IWikiPage | undefined => {
@@ -14,6 +15,11 @@ export const parseWikiUrl = (url: string): IWikiPage | undefined => {
     }
 
     const wikiName = m.groups?.wikiName?.trim();
+    const projectNameParts = wikiName?.split('.');
+    const projectName =
+      projectNameParts !== undefined && projectNameParts?.length > 1
+        ? projectNameParts[0]
+        : undefined;
     const wikiId = m.groups?.wikiId?.trim();
     const wikiPath = m.groups?.wikiPath?.trim();
     if (wikiId === undefined || wikiName === undefined || wikiPath === undefined) {
@@ -26,6 +32,7 @@ export const parseWikiUrl = (url: string): IWikiPage | undefined => {
     }
 
     return {
+      projectName: projectName,
       name: wikiName,
       id: wikiIdNum,
       path: wikiPath
