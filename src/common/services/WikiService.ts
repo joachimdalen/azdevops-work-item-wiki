@@ -1,13 +1,26 @@
+import { WebLogger } from '@joachimdalen/azdevops-ext-core/WebLogger';
 import { getClient } from 'azure-devops-extension-api';
 import { GitRestClient, VersionControlRecursionType } from 'azure-devops-extension-api/Git';
-import { WikiRestClient } from 'azure-devops-extension-api/Wiki';
+import { WikiRestClient, WikiV2 } from 'azure-devops-extension-api/Wiki';
 import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTracking';
 import * as DevOps from 'azure-devops-extension-sdk';
 
 import { IWikiPage, parseWikiUrl } from '..';
 
+export enum WikiResultCode {
+  ParseFailure = 0,
+  FailedToResolve = 1,
+  FailedToFindContent = 2,
+  UnknownFailure = 3,
+  Success = 4
+}
+export interface WikiResult {
+  content?: string;
+  result: WikiResultCode;
+}
+
 interface IWikiService {
-  loadWikiPage(url: string): Promise<string | undefined>;
+  loadWikiPage(url: string): Promise<WikiResult>;
   transformAttachmentUrl(url: string): string;
 }
 class WikiService implements IWikiService {
@@ -36,26 +49,69 @@ class WikiService implements IWikiService {
     }
   }
 
-  public async loadWikiPage(url: string): Promise<string | undefined> {
+  public async tryGetWiki(wikiName: string, project: string): Promise<WikiV2 | undefined> {
+    try {
+      const wikiDef = await this._wikiClient.getWiki(wikiName, project);
+      return wikiDef;
+    } catch {
+      return undefined;
+    }
+  }
+
+  public async loadWikiPage(url: string): Promise<WikiResult> {
     const wiki: IWikiPage | undefined = parseWikiUrl(url);
-    if (wiki === undefined) return;
+    if (wiki === undefined)
+      return {
+        result: WikiResultCode.ParseFailure
+      };
 
-    const project = await this.getProjectForWorkItem();
-    if (project === undefined) return;
+    let wikiDef = undefined;
+    let projectName = wiki.projectName;
 
-    const wikiDef = await this._wikiClient.getWiki(wiki.name, project);
+    if (wiki.projectName !== undefined) {
+      wikiDef = await this.tryGetWiki(wiki.name, wiki.projectName);
+    }
 
-    const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, project);
-    this.setBaseUrl(wikiRepo.url);
+    if (wikiDef === undefined) {
+      const project = await this.getProjectForWorkItem();
+      if (project !== undefined) {
+        wikiDef = await this._wikiClient.getWiki(wiki.name, project);
+        projectName = project;
+      }
+    }
 
-    const wikiContent = await this._wikiClient.getPageByIdText(
-      project,
-      wiki.name,
-      wiki.id,
-      VersionControlRecursionType.Full,
-      true
-    );
-    return wikiContent;
+    if (wikiDef === undefined || projectName === undefined) {
+      return {
+        result: WikiResultCode.FailedToResolve
+      };
+    }
+
+    try {
+      const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, projectName);
+      this.setBaseUrl(wikiRepo.url);
+    } catch (error) {
+      this.setBaseUrl('');
+      WebLogger.warning('Failed to resolve repository for wiki');
+    }
+
+    try {
+      const wikiContent = await this._wikiClient.getPageByIdText(
+        projectName,
+        wiki.name,
+        wiki.id,
+        VersionControlRecursionType.Full,
+        true
+      );
+      return {
+        result: WikiResultCode.Success,
+        content: wikiContent
+      };
+    } catch (error) {
+      WebLogger.error(error);
+      return {
+        result: WikiResultCode.FailedToFindContent
+      };
+    }
   }
 
   public setBaseUrl(url: string): void {
