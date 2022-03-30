@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.2 (2022-03-XX)
+
+### 🐛 Fixes (1)
+
+- Update rendered link attributes
+  - Reported in: [GH#12 - Links should be parsed as `target="_blank"`](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/12)
+
+## 🌟 Contributors
+
+Thank you to the following for contributing to the latest release
+
+- [@BlackPhlox](https://github.com/BlackPhlox)
+
+---
+
 ## 1.1.1 (2022-03-23)
 
 ### 🐛 Fixes (1)

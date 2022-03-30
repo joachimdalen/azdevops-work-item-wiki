@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.1.2",
+    "publishDate": "2022-03-XX",
+    "changes": [
+      {
+        "type": "fix",
+        "description": "Update rendered link attributes",
+        "issue": 12
+      }
+    ]
+  },
+  {
     "version": "1.1.1",
     "publishDate": "2022-03-23",
     "changes": [
