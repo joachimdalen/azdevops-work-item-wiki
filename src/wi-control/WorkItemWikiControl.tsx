@@ -128,7 +128,15 @@ const WorkItemWikiControl = (): JSX.Element => {
     children: Array<ElementContent>,
     title: string | null
   ) => {
-    return wikiService.transformAttachmentUrl(href, '');
+    if (href.startsWith('http')) {
+      return href;
+    }
+
+    return wikiService.transformAttachmentUrl(
+      href,
+      result?.meta?.gitItemPath || '',
+      config?.versionBranch
+    );
   };
 
   if (loading) {
@@ -158,6 +166,7 @@ const WorkItemWikiControl = (): JSX.Element => {
           <ReactMarkdown
             remarkPlugins={[gfm]}
             transformImageUri={transformImageUrls}
+            transformLinkUri={transformLinkUri}
             components={{
               a: props => (
                 <a href={props.href} rel="noopener noreferrer" target="_blank">
