@@ -81,6 +81,16 @@
               "dataType": "String",
               "isRequired": true
             }
+          },
+          {
+            "id": "versionBranch",
+            "name": "Version Branch",
+            "description": "The branch the wiki is loaded from. Defaults to wikiMaster",
+            "validation": {
+              "dataType": "String",
+              "isRequired": true,
+              "default": "wikiMaster"
+            }
           }
         ]
       }
