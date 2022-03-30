@@ -87,9 +87,8 @@
           },
           {
             "id": "versionBranch",
-            "name": "Version Branch",
-            "description": "The branch the wiki is loaded from. Defaults to wikiMaster",
-            "default": "wikiMaster",
+            "name": "Version Branch (When using publish from code)",
+            "description": "The branch the wiki is loaded from",
             "validation": {
               "dataType": "String",
               "isRequired": true

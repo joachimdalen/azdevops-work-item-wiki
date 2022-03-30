@@ -19,7 +19,16 @@ describe('WorkItemWikiControl', () => {
   it('should show loader while waiting', async () => {
     loadWikiSpy.mockResolvedValue({
       result: WikiResultCode.Success,
-      content: 'Hello'
+      meta: {
+        content: 'Hello',
+        gitItemPath: 'README.md',
+        id: 1,
+        order:1,
+        path: "/some/path",
+        remoteUrl: '',
+        subPages: [],
+        url: ''
+      }
     });
     mockGetConfiguration.mockReturnValue({
       witInputs: {
@@ -32,7 +41,16 @@ describe('WorkItemWikiControl', () => {
   it('should show zero if no content loaded', async () => {
     loadWikiSpy.mockResolvedValue({
       result: WikiResultCode.FailedToFindContent,
-      content: 'Hello'
+      meta: {
+        content: 'Hello',
+        gitItemPath: 'README.md',
+        id: 1,
+        order:1,
+        path: "/some/path",
+        remoteUrl: '',
+        subPages: [],
+        url: ''
+      }
     });
     mockGetConfiguration.mockReturnValue({
       witInputs: {
@@ -46,7 +64,16 @@ describe('WorkItemWikiControl', () => {
   it('should load content', async () => {
     loadWikiSpy.mockResolvedValue({
       result: WikiResultCode.Success,
-      content: '### Hello'
+      meta: {
+        content: '### Hello',
+        gitItemPath: 'README.md',
+        id: 1,
+        order:1,
+        path: "/some/path",
+        remoteUrl: '',
+        subPages: [],
+        url: ''
+      }
     });
     mockGetConfiguration.mockReturnValue({
       witInputs: {

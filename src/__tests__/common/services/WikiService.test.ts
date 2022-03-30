@@ -25,16 +25,16 @@ describe('WikiService', () => {
 
     it('should return undefined when unknown url', async () => {
       const service = new WikiService();
-      const result = await service.loadWikiPage(invalidUrl);
-      expect(result.content).toBeUndefined();
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      expect(result.meta?.content).toBeUndefined();
       expect(result.result).toEqual(WikiResultCode.ParseFailure);
     });
 
     it('should return undefined when failing to get project', async () => {
       mockGetProject.mockResolvedValue(undefined);
       const service = new WikiService();
-      const result = await service.loadWikiPage(validUrl);
-      expect(result.content).toBeUndefined();
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      expect(result.meta?.content).toBeUndefined();
       expect(result.result).toEqual(WikiResultCode.FailedToResolve);
     });
 
@@ -53,10 +53,10 @@ describe('WikiService', () => {
       mockGetPageByIdText.mockResolvedValue('### Hello');
 
       const service = new WikiService();
-      const result = await service.loadWikiPage(validUrl);
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
       expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', project.name);
       expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, project.name);
-      expect(result.content).toEqual('### Hello');
+      expect(result.meta?.content).toEqual('### Hello');
       expect(result.result).toEqual(WikiResultCode.Success);
     });
   });
@@ -68,18 +68,20 @@ describe('WikiService', () => {
 
     it('should passed url when base is not set', async () => {
       const service = new WikiService();
-      expect(service.transformAttachmentUrl('/.attachments/path')).toEqual('/.attachments/path');
+      expect(service.transformAttachmentUrl('/.attachments/path', '')).toEqual(
+        '/.attachments/path'
+      );
     });
     it('should passed url when passed is not attachment', async () => {
       const service = new WikiService();
-      expect(service.transformAttachmentUrl('/.some/path')).toEqual('/.some/path');
+      expect(service.transformAttachmentUrl('/.some/path', '')).toEqual('/.some/path');
     });
     it('should return full url when valid', async () => {
       const service = new WikiService();
       const base = 'https://repo.localhost.text';
       service.setBaseUrl(base);
       const attachment = '/.attachments/file.txt';
-      expect(service.transformAttachmentUrl(attachment)).toEqual(
+      expect(service.transformAttachmentUrl(attachment, '')).toEqual(
         `${base}/Items?path=${attachment}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`
       );
     });

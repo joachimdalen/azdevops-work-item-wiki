@@ -15,11 +15,7 @@ import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
-
-interface WitInputs {
-  wikiUrl: string;
-}
-
+import { WikiControlConfiguration } from './types';
 interface WikiResultText {
   title: string;
   description: string;
@@ -67,6 +63,7 @@ const getResult = (result?: WikiResult): WikiResultText | undefined => {
 const WorkItemWikiControl = (): JSX.Element => {
   const [result, setResult] = useState<WikiResult>();
   const [loading, toggle] = useBooleanToggle(true);
+  const [config, setConfig] = useState<WikiControlConfiguration>();
   useResizeTimeout(5000);
   const [wikiService] = useMemo(() => [new WikiService()], []);
 
@@ -81,9 +78,14 @@ const WorkItemWikiControl = (): JSX.Element => {
 
   async function loadWikiPage() {
     toggle(true);
-    const config: WitInputs = DevOps.getConfiguration().witInputs;
-    const loadResult: WikiResult = await wikiService.loadWikiPage(config.wikiUrl);
-    setResult(loadResult);
+    const wiConfig: WikiControlConfiguration = DevOps.getConfiguration().witInputs;
+    setConfig(wiConfig);
+    if (wiConfig !== undefined) {
+      const loadResult: WikiResult = await wikiService.loadWikiPage(wiConfig);
+      setResult(loadResult);
+    } else {
+      setResult({ result: WikiResultCode.ParseFailure });
+    }
     toggle(false);
   }
 
@@ -114,7 +116,11 @@ const WorkItemWikiControl = (): JSX.Element => {
   }, []);
 
   const transformImageUrls = (src: string, alt: string, title: string | null): string => {
-    return wikiService.transformAttachmentUrl(src);
+    return wikiService.transformAttachmentUrl(
+      src,
+      result?.meta?.gitItemPath || '',
+      config?.versionBranch
+    );
   };
 
   const transformLinkUri = (
@@ -122,7 +128,7 @@ const WorkItemWikiControl = (): JSX.Element => {
     children: Array<ElementContent>,
     title: string | null
   ) => {
-    return wikiService.transformAttachmentUrl(href);
+    return wikiService.transformAttachmentUrl(href, '');
   };
 
   if (loading) {
@@ -152,7 +158,6 @@ const WorkItemWikiControl = (): JSX.Element => {
           <ReactMarkdown
             remarkPlugins={[gfm]}
             transformImageUri={transformImageUrls}
-            transformLinkUri={transformLinkUri}
             components={{
               a: props => (
                 <a href={props.href} rel="noopener noreferrer" target="_blank">
@@ -161,7 +166,7 @@ const WorkItemWikiControl = (): JSX.Element => {
               )
             }}
           >
-            {result?.content || 'No content'}
+            {result?.meta?.content || 'No content'}
           </ReactMarkdown>
         </div>
       </div>
