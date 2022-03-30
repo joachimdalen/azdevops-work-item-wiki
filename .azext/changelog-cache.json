@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1186531140,
+      "number": 12,
+      "submitter": "BlackPhlox",
+      "title": "Links should be parsed as `target=\"_blank\"`",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues/12"
+    },
+    {
       "id": 1150484868,
       "number": 4,
       "submitter": "joachimdalen",
@@ -9,6 +16,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 894611967,
+      "number": 13,
+      "submitter": "joachimdalen",
+      "title": "Update link attributes",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/13"
+    },
     {
       "id": 887657502,
       "number": 9,

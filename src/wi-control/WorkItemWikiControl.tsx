@@ -153,6 +153,13 @@ const WorkItemWikiControl = (): JSX.Element => {
             remarkPlugins={[gfm]}
             transformImageUri={transformImageUrls}
             transformLinkUri={transformLinkUri}
+            components={{
+              a: props => (
+                <a href={props.href} rel="noopener noreferrer" target="_blank">
+                  {props.children}
+                </a>
+              )
+            }}
           >
             {result?.content || 'No content'}
           </ReactMarkdown>
