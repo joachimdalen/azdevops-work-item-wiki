@@ -17,6 +17,13 @@
   ],
   "pullRequests": [
     {
+      "id": 894611967,
+      "number": 13,
+      "submitter": "joachimdalen",
+      "title": "Update link attributes",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/13"
+    },
+    {
       "id": 887657502,
       "number": 9,
       "submitter": "joachimdalen",

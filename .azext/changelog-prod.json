@@ -6,7 +6,8 @@
       {
         "type": "fix",
         "description": "Update rendered link attributes",
-        "issue": 12
+        "issue": 12,
+        "pullRequest": 13
       }
     ]
   },
