@@ -36,7 +36,7 @@ const getResult = (result?: WikiResult): WikiResultText | undefined => {
       return {
         title: 'Failed to resolve project',
         description:
-          'Failed to resolve the project for the wiki. Please specify the project in control options'
+          'Failed to resolve the project for the wiki.'
       };
     }
     case WikiResultCode.FailedToFindContent: {
