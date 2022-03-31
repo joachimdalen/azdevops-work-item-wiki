@@ -1,9 +1,5 @@
-export interface IWikiPage {
-  name: string;
-  id: number;
-  path: string;
-  projectName?: string;
-}
+import { IWikiPage } from "../wi-control/types";
+
 
 export const parseWikiUrl = (url: string): IWikiPage | undefined => {
   const expression = /_wiki\/wikis\/(?<wikiName>.+)\/(?<wikiId>\d+)\/(?<wikiPath>.+)/gm;

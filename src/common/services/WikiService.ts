@@ -10,8 +10,8 @@ import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTrackin
 import * as DevOps from 'azure-devops-extension-sdk';
 import path from 'path';
 
-import { IWikiPage, parseWikiUrl } from '..';
-import { WikiControlConfiguration } from '../../wi-control/types';
+import { IWikiPage, WikiControlConfiguration } from '../../wi-control/types';
+import { parseWikiUrl } from '../parseWikiUrl';
 
 export enum WikiResultCode {
   ParseFailure = 0,

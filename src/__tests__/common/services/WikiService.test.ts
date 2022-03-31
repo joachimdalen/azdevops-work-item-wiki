@@ -59,6 +59,34 @@ describe('WikiService', () => {
       expect(result.meta?.content).toEqual('### Hello');
       expect(result.result).toEqual(WikiResultCode.Success);
     });
+    it('should get project from work item when failing from url', async () => {
+      const repo: Partial<GitRepository> = {
+        url: 'https://git.localhost.test'
+      };
+      const wiki: Partial<WikiV2> = {
+        id: 'DemoProject.wiki',
+        name: 'Demo project wiki',
+        repositoryId: '50752e85-abae-48a2-b509-7ecaed38f640'
+      };
+      mockGetFieldValue.mockResolvedValue('DemoProject');
+      mockGetRepository.mockResolvedValue(repo);
+      mockGetWiki.mockImplementation((wikiName: string, project: string) => {
+        switch (project) {
+          case 'demo-project':
+            return undefined;
+          case 'demo project':
+            return undefined;
+          case 'DemoProject':
+            return wiki;
+        }
+      });
+      const service = new WikiService();
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      expect(result.result).toEqual(WikiResultCode.Success);
+      expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', 'DemoProject');
+      expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, 'DemoProject');
+      expect(result.meta?.content).toEqual('### Hello');
+    });
   });
 
   describe('transformAttachmentUrl', () => {

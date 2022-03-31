@@ -15,11 +15,8 @@ import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
-import { WikiControlConfiguration } from './types';
-interface WikiResultText {
-  title: string;
-  description: string;
-}
+import { WikiControlConfiguration, WikiResultText } from './types';
+
 
 const getResult = (result?: WikiResult): WikiResultText | undefined => {
   if (result === undefined) {
