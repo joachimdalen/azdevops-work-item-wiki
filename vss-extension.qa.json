@@ -90,8 +90,7 @@
             "name": "Version Branch (When using publish from code)",
             "description": "The branch the wiki is loaded from",
             "validation": {
-              "dataType": "String",
-              "isRequired": true
+              "dataType": "String"
             }
           }
         ]
