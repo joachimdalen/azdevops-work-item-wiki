@@ -18,7 +18,8 @@
       {
         "type": "enhancement",
         "description": "Use default font provided by Azure DevOps",
-        "issue": 10
+        "issue": 10,
+        "pullRequest": 15
       }
     ]
   },

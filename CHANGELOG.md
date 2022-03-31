@@ -17,6 +17,7 @@
 
 - Use default font provided by Azure DevOps
   - Issue: [GH#10 - Update font to Segoe UI](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/10)
+  - Pull Request: [PR#15 - Use default Azure DevOps font family](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/15)
 
 ## 🌟 Contributors
 
