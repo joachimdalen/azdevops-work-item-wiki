@@ -8,6 +8,12 @@
         "description": "Update rendered link attributes",
         "issue": 12,
         "pullRequest": 13
+      },
+      {
+        "type": "fix",
+        "description": "Fixed images always being loaded from the branch `wikiMaster`",
+        "issue": 11,
+        "pullRequest": 14
       }
     ]
   },

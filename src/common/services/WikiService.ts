@@ -1,11 +1,18 @@
+import {
+  ExtendedWikiRestClient,
+  WikiPageMeta
+} from '@joachimdalen/azdevops-ext-core/ExtendedWikiRestClient';
 import { WebLogger } from '@joachimdalen/azdevops-ext-core/WebLogger';
 import { getClient } from 'azure-devops-extension-api';
 import { GitRestClient, VersionControlRecursionType } from 'azure-devops-extension-api/Git';
 import { WikiRestClient, WikiV2 } from 'azure-devops-extension-api/Wiki';
 import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTracking';
 import * as DevOps from 'azure-devops-extension-sdk';
+import path from 'path';
 
-import { IWikiPage, parseWikiUrl } from '..';
+import { IWikiPage, WikiControlConfiguration } from '../../wi-control/types';
+import { parseProjectName } from '../parseProjectName';
+import { parseWikiUrl } from '../parseWikiUrl';
 
 export enum WikiResultCode {
   ParseFailure = 0,
@@ -15,22 +22,24 @@ export enum WikiResultCode {
   Success = 4
 }
 export interface WikiResult {
-  content?: string;
+  meta?: WikiPageMeta;
   result: WikiResultCode;
 }
 
 interface IWikiService {
-  loadWikiPage(url: string): Promise<WikiResult>;
-  transformAttachmentUrl(url: string): string;
+  loadWikiPage(options: WikiControlConfiguration): Promise<WikiResult>;
+  transformAttachmentUrl(url: string, rootPath: string, branchName?: string): string;
 }
 class WikiService implements IWikiService {
   private _gitClient: GitRestClient;
   private _wikiClient: WikiRestClient;
+  private _extWikiClient: ExtendedWikiRestClient;
   private _wikiRepoUrl?: string;
 
   constructor() {
     this._wikiClient = getClient(WikiRestClient);
     this._gitClient = getClient(GitRestClient);
+    this._extWikiClient = getClient(ExtendedWikiRestClient);
   }
 
   public async getProjectForWorkItem(): Promise<string | undefined> {
@@ -58,21 +67,25 @@ class WikiService implements IWikiService {
     }
   }
 
-  public async loadWikiPage(url: string): Promise<WikiResult> {
-    const wiki: IWikiPage | undefined = parseWikiUrl(url);
+  public async loadWikiPage(options: WikiControlConfiguration): Promise<WikiResult> {
+    const wiki: IWikiPage | undefined = parseWikiUrl(options.wikiUrl);
     if (wiki === undefined)
       return {
         result: WikiResultCode.ParseFailure
       };
 
     let wikiDef = undefined;
-    let projectName = wiki.projectName;
+    let projectName = parseProjectName(options.wikiUrl);
 
-    if (wiki.projectName !== undefined) {
+    if (projectName !== undefined) {
+      wikiDef = await this.tryGetWiki(wiki.name, projectName);
+    }
+
+    if (wikiDef === undefined && wiki.projectName !== undefined) {
       wikiDef = await this.tryGetWiki(wiki.name, wiki.projectName);
 
       if (wikiDef === undefined && wiki.projectName.indexOf('-') > 0) {
-        const spaceProject = wiki.projectName.replaceAll('-', ' ');
+        const spaceProject = wiki.projectName.replace(/-/g, ' ');
         wikiDef = await this.tryGetWiki(wiki.name, spaceProject);
         projectName = spaceProject;
       }
@@ -101,16 +114,17 @@ class WikiService implements IWikiService {
     }
 
     try {
-      const wikiContent = await this._wikiClient.getPageByIdText(
+      const wikiMeta = await this._extWikiClient.getPageMetadata(
         projectName,
         wiki.name,
         wiki.id,
         VersionControlRecursionType.Full,
         true
       );
+
       return {
         result: WikiResultCode.Success,
-        content: wikiContent
+        meta: wikiMeta
       };
     } catch (error) {
       WebLogger.error(error);
@@ -124,11 +138,19 @@ class WikiService implements IWikiService {
     this._wikiRepoUrl = url;
   }
 
-  public transformAttachmentUrl(url: string): string {
-    if (!url.startsWith('/.attachments') || this._wikiRepoUrl === undefined) {
+  public transformAttachmentUrl(url: string, rootPath: string, branchName?: string): string {
+    if (this._wikiRepoUrl === undefined) {
       return url;
     }
-    const fullRepoUrl = `${this._wikiRepoUrl}/Items?path=${url}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`;
+
+    const resolved = path.resolve(path.dirname(rootPath), url);
+
+    const fullRepoUrl = `${
+      this._wikiRepoUrl
+    }/Items?path=${resolved}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=${
+      branchName || 'wikiMaster'
+    }`;
+
     return fullRepoUrl;
   }
 }

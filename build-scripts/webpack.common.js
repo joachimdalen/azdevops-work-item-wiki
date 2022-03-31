@@ -34,7 +34,10 @@ module.exports = {
       'azure-devops-extension-api': path.resolve('node_modules/azure-devops-extension-api'),
       react: path.resolve('node_modules/react'),
       'react-dom': path.resolve('node_modules/react-dom'),
-      'azure-devops-ui': path.resolve('node_modules/azure-devops-ui'),
+      'azure-devops-ui': path.resolve('node_modules/azure-devops-ui')
+    },
+    fallback: {
+      path: require.resolve('path-browserify')
     }
   },
   // stats: 'errors-only',

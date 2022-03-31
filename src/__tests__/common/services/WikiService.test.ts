@@ -1,15 +1,15 @@
+import { WikiPageMeta } from '@joachimdalen/azdevops-ext-core/ExtendedWikiRestClient';
 import { IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git';
 import { WikiV2 } from 'azure-devops-extension-api/Wiki';
 
+import { mockGetPageMetadata } from '../../../__mocks__/@joachimdalen/azdevops-ext-core/ExtendedWikiRestClient';
 import { mockGetRepository } from '../../../__mocks__/azure-devops-extension-api/Git';
-import {
-  mockGetPageByIdText,
-  mockGetWiki
-} from '../../../__mocks__/azure-devops-extension-api/Wiki';
+import { mockGetWiki } from '../../../__mocks__/azure-devops-extension-api/Wiki';
 import { mockGetFieldValue, mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
 import WikiService, { WikiResultCode } from '../../../common/services/WikiService';
 jest.mock('azure-devops-extension-api');
+
 describe('WikiService', () => {
   const validUrl =
     'https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page';
@@ -25,16 +25,17 @@ describe('WikiService', () => {
 
     it('should return undefined when unknown url', async () => {
       const service = new WikiService();
-      const result = await service.loadWikiPage(invalidUrl);
-      expect(result.content).toBeUndefined();
+      const result = await service.loadWikiPage({ wikiUrl: invalidUrl });
+      expect(result.meta?.content).toBeUndefined();
       expect(result.result).toEqual(WikiResultCode.ParseFailure);
     });
 
     it('should return undefined when failing to get project', async () => {
+      mockGetWiki.mockImplementation((wikiName, projectName) => undefined);
       mockGetProject.mockResolvedValue(undefined);
       const service = new WikiService();
-      const result = await service.loadWikiPage(validUrl);
-      expect(result.content).toBeUndefined();
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      expect(result.meta?.content).toBeUndefined();
       expect(result.result).toEqual(WikiResultCode.FailedToResolve);
     });
 
@@ -50,14 +51,52 @@ describe('WikiService', () => {
       };
       mockGetWiki.mockResolvedValue(wiki);
       mockGetRepository.mockResolvedValue(repo);
-      mockGetPageByIdText.mockResolvedValue('### Hello');
+      const data: WikiPageMeta = {
+        path: '',
+        order: 0,
+        gitItemPath: 'README.md',
+        subPages: [],
+        url: validUrl,
+        remoteUrl: validUrl,
+        id: 1,
+        content: '### Hello'
+      };
+      mockGetPageMetadata.mockResolvedValue(data);
 
       const service = new WikiService();
-      const result = await service.loadWikiPage(validUrl);
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
       expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', project.name);
       expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, project.name);
-      expect(result.content).toEqual('### Hello');
+      expect(result.meta?.content).toEqual('### Hello');
       expect(result.result).toEqual(WikiResultCode.Success);
+    });
+    it('should get project from work item when failing from url', async () => {
+      const repo: Partial<GitRepository> = {
+        url: 'https://git.localhost.test'
+      };
+      const wiki: Partial<WikiV2> = {
+        id: 'DemoProject.wiki',
+        name: 'Demo project wiki',
+        repositoryId: '50752e85-abae-48a2-b509-7ecaed38f640'
+      };
+      mockGetFieldValue.mockResolvedValue('DemoProject');
+      mockGetRepository.mockResolvedValue(repo);
+      mockGetWiki.mockImplementation((wikiName: string, project: string) => {
+        switch (project) {
+          case 'demo-project':
+            return undefined;
+          case 'demo project':
+            return undefined;
+          case 'DemoProject':
+            return wiki;
+        }
+      });
+      const service = new WikiService();
+      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      expect(result.result).toEqual(WikiResultCode.Success);
+      expect(mockGetWiki).toHaveBeenCalledWith('demo-project.wiki', 'DemoProject');
+      expect(mockGetRepository).toHaveBeenCalledWith(wiki.repositoryId, 'DemoProject');
+      expect(result.meta?.content).toEqual('### Hello');
     });
   });
 
@@ -68,18 +107,20 @@ describe('WikiService', () => {
 
     it('should passed url when base is not set', async () => {
       const service = new WikiService();
-      expect(service.transformAttachmentUrl('/.attachments/path')).toEqual('/.attachments/path');
+      expect(service.transformAttachmentUrl('/.attachments/path', '')).toEqual(
+        '/.attachments/path'
+      );
     });
     it('should passed url when passed is not attachment', async () => {
       const service = new WikiService();
-      expect(service.transformAttachmentUrl('/.some/path')).toEqual('/.some/path');
+      expect(service.transformAttachmentUrl('/.some/path', '')).toEqual('/.some/path');
     });
     it('should return full url when valid', async () => {
       const service = new WikiService();
       const base = 'https://repo.localhost.text';
       service.setBaseUrl(base);
       const attachment = '/.attachments/file.txt';
-      expect(service.transformAttachmentUrl(attachment)).toEqual(
+      expect(service.transformAttachmentUrl(attachment, '')).toEqual(
         `${base}/Items?path=${attachment}&download=false&resolveLfs=true&$format=octetStream&api-version=5.0-preview.1&sanitize=true&versionDescriptor.version=wikiMaster`
       );
     });

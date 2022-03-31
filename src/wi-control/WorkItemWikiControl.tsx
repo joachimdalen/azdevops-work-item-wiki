@@ -15,15 +15,7 @@ import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
-
-interface WitInputs {
-  wikiUrl: string;
-}
-
-interface WikiResultText {
-  title: string;
-  description: string;
-}
+import { WikiControlConfiguration, WikiResultText } from './types';
 
 const getResult = (result?: WikiResult): WikiResultText | undefined => {
   if (result === undefined) {
@@ -44,7 +36,7 @@ const getResult = (result?: WikiResult): WikiResultText | undefined => {
       return {
         title: 'Failed to resolve project',
         description:
-          'Failed to resolve the project for the wiki. Please specify the project in control options'
+          'Failed to resolve the project for the wiki.'
       };
     }
     case WikiResultCode.FailedToFindContent: {
@@ -67,6 +59,7 @@ const getResult = (result?: WikiResult): WikiResultText | undefined => {
 const WorkItemWikiControl = (): JSX.Element => {
   const [result, setResult] = useState<WikiResult>();
   const [loading, toggle] = useBooleanToggle(true);
+  const [config, setConfig] = useState<WikiControlConfiguration>();
   useResizeTimeout(5000);
   const [wikiService] = useMemo(() => [new WikiService()], []);
 
@@ -81,9 +74,14 @@ const WorkItemWikiControl = (): JSX.Element => {
 
   async function loadWikiPage() {
     toggle(true);
-    const config: WitInputs = DevOps.getConfiguration().witInputs;
-    const loadResult: WikiResult = await wikiService.loadWikiPage(config.wikiUrl);
-    setResult(loadResult);
+    const wiConfig: WikiControlConfiguration = DevOps.getConfiguration().witInputs;
+    setConfig(wiConfig);
+    if (wiConfig !== undefined) {
+      const loadResult: WikiResult = await wikiService.loadWikiPage(wiConfig);
+      setResult(loadResult);
+    } else {
+      setResult({ result: WikiResultCode.ParseFailure });
+    }
     toggle(false);
   }
 
@@ -94,7 +92,7 @@ const WorkItemWikiControl = (): JSX.Element => {
           loaded: false,
           applyTheme: true
         });
-        WebLogger.debug('Loading work item control...');
+        WebLogger.debug('Loading work item wiki control...');
         await DevOps.ready();
         DevOps.register(DevOps.getContributionId(), provider);
 
@@ -114,7 +112,11 @@ const WorkItemWikiControl = (): JSX.Element => {
   }, []);
 
   const transformImageUrls = (src: string, alt: string, title: string | null): string => {
-    return wikiService.transformAttachmentUrl(src);
+    return wikiService.transformAttachmentUrl(
+      src,
+      result?.meta?.gitItemPath || '',
+      config?.versionBranch
+    );
   };
 
   const transformLinkUri = (
@@ -122,7 +124,15 @@ const WorkItemWikiControl = (): JSX.Element => {
     children: Array<ElementContent>,
     title: string | null
   ) => {
-    return wikiService.transformAttachmentUrl(href);
+    if (href.startsWith('http')) {
+      return href;
+    }
+
+    return wikiService.transformAttachmentUrl(
+      href,
+      result?.meta?.gitItemPath || '',
+      config?.versionBranch
+    );
   };
 
   if (loading) {
@@ -161,7 +171,7 @@ const WorkItemWikiControl = (): JSX.Element => {
               )
             }}
           >
-            {result?.content || 'No content'}
+            {result?.meta?.content || 'No content'}
           </ReactMarkdown>
         </div>
       </div>

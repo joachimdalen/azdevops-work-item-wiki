@@ -2,11 +2,16 @@
 
 ## 1.1.2 (2022-03-XX)
 
-### 🐛 Fixes (1)
+### 🐛 Fixes (2)
 
 - Update rendered link attributes
+
   - Reported in: [GH#12 - Links should be parsed as `target="_blank"`](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/12)
   - Fixed in: [PR#13 - Update link attributes](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/13)
+
+- Fixed images always being loaded from the branch `wikiMaster`
+  - Reported in: [GH#11 - Images is always read from `wikiMaster`](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/11)
+  - Fixed in: [PR#14 - Better handling of code wikis and attachments](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/14)
 
 ## 🌟 Contributors
 

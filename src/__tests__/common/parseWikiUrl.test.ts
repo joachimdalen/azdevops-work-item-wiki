@@ -46,4 +46,14 @@ describe('parseWikiUrl', () => {
     expect(parsed?.name).toEqual('MyProjectWiki');
     expect(parsed?.projectName).toBeUndefined();
   });
+  it('should parse wiki name when containing space', async () => {
+    const url =
+      'https://dev.azure.com/organization/demo-project/_wiki/wikis/MyProject%20Wiki/112/This-is-a-page';
+    const parsed = parseWikiUrl(url);
+    expect(parsed).toBeDefined();
+    expect(parsed?.id).toEqual(112);
+    expect(parsed?.path).toEqual('This-is-a-page');
+    expect(parsed?.name).toEqual('MyProject Wiki');
+    expect(parsed?.projectName).toBeUndefined();
+  });
 });
