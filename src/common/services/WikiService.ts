@@ -11,6 +11,7 @@ import * as DevOps from 'azure-devops-extension-sdk';
 import path from 'path';
 
 import { IWikiPage, WikiControlConfiguration } from '../../wi-control/types';
+import { parseProjectName } from '../parseProjectName';
 import { parseWikiUrl } from '../parseWikiUrl';
 
 export enum WikiResultCode {
@@ -74,9 +75,13 @@ class WikiService implements IWikiService {
       };
 
     let wikiDef = undefined;
-    let projectName = wiki.projectName;
+    let projectName = parseProjectName(options.wikiUrl);
 
-    if (wiki.projectName !== undefined) {
+    if (projectName !== undefined) {
+      wikiDef = await this.tryGetWiki(wiki.name, projectName);
+    }
+
+    if (wikiDef === undefined && wiki.projectName !== undefined) {
       wikiDef = await this.tryGetWiki(wiki.name, wiki.projectName);
 
       if (wikiDef === undefined && wiki.projectName.indexOf('-') > 0) {

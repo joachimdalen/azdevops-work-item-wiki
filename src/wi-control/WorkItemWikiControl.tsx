@@ -17,7 +17,6 @@ import gfm from 'remark-gfm';
 import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
 import { WikiControlConfiguration, WikiResultText } from './types';
 
-
 const getResult = (result?: WikiResult): WikiResultText | undefined => {
   if (result === undefined) {
     return {
@@ -93,7 +92,7 @@ const WorkItemWikiControl = (): JSX.Element => {
           loaded: false,
           applyTheme: true
         });
-        WebLogger.debug('Loading work item control...');
+        WebLogger.debug('Loading work item wiki control...');
         await DevOps.ready();
         DevOps.register(DevOps.getContributionId(), provider);
 
