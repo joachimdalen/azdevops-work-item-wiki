@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1186468910,
+      "number": 10,
+      "submitter": "BlackPhlox",
+      "title": "Update font to Segoe UI",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues/10"
+    },
+    {
       "id": 1186517317,
       "number": 11,
       "submitter": "BlackPhlox",
