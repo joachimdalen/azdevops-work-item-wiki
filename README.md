@@ -103,7 +103,8 @@ Example where rendered on custom page:
 
 Work Item Link is a custom form control that needs to be added to the Work Item Form. It can be added on an existing page, or as a new tab. For how to do this, refer to the [official documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/settings/work/custom-controls-process?view=azure-devops#add-a-field-level-contribution-or-custom-control).
 
-Wiki Url is the url to the wiki page, it should look something like: `https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page`
+- `Wiki Url` is the url to the wiki page, it should look something like: `https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page`
+- `Version Branch` is used when publishing the wiki from code. If your main branch is not `wikiMaster`, this field must be set to load links, images and attachments correctly.
 
 | ![Config one][config-one] | ![Config one][config-two] |
 | ------------------------- | ------------------------- |
