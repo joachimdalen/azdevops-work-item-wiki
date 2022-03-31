@@ -94,8 +94,6 @@ class WikiService implements IWikiService {
       }
     }
 
-    console.log('wikiDef', wikiDef);
-
     if (wikiDef === undefined || projectName === undefined) {
       return {
         result: WikiResultCode.FailedToResolve
@@ -104,7 +102,6 @@ class WikiService implements IWikiService {
 
     try {
       const wikiRepo = await this._gitClient.getRepository(wikiDef.repositoryId, projectName);
-      console.log('wikiRepo', wikiRepo);
       this.setBaseUrl(wikiRepo.url);
     } catch (error) {
       this.setBaseUrl('');
@@ -112,14 +109,7 @@ class WikiService implements IWikiService {
     }
 
     try {
-      const wikiContent = await this._wikiClient.getPageByIdText(
-        projectName,
-        wiki.name,
-        wiki.id,
-        VersionControlRecursionType.Full,
-        false
-      );
-      const wikiContent2 = await this._extWikiClient.getPageMetadata(
+      const wikiMeta = await this._extWikiClient.getPageMetadata(
         projectName,
         wiki.name,
         wiki.id,
@@ -128,11 +118,10 @@ class WikiService implements IWikiService {
       );
 
       /// Wiki with space deos not work either
-      console.log('wikiContent', wikiContent);
-      console.log('wikiContent2', wikiContent2);
+
       return {
         result: WikiResultCode.Success,
-        meta: wikiContent2
+        meta: wikiMeta
       };
     } catch (error) {
       WebLogger.error(error);
