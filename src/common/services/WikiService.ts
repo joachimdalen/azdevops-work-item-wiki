@@ -122,8 +122,6 @@ class WikiService implements IWikiService {
         true
       );
 
-      /// Wiki with space deos not work either
-
       return {
         result: WikiResultCode.Success,
         meta: wikiMeta

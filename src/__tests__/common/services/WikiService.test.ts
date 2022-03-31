@@ -9,7 +9,7 @@ import { mockGetWiki } from '../../../__mocks__/azure-devops-extension-api/Wiki'
 import { mockGetFieldValue, mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
 import WikiService, { WikiResultCode } from '../../../common/services/WikiService';
 jest.mock('azure-devops-extension-api');
-//jest.mock('@joachimdalen/azdevops-ext-core');
+
 describe('WikiService', () => {
   const validUrl =
     'https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page';
