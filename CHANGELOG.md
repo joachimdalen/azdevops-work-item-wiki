@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.2 (2022-03-XX)
+## 1.3.0 (2022-04-XX)
 
 ### 🐛 Fixes (2)
 
@@ -12,6 +12,12 @@
 - Fixed images always being loaded from the branch `wikiMaster`
   - Reported in: [GH#11 - Images is always read from `wikiMaster`](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/11)
   - Fixed in: [PR#14 - Better handling of code wikis and attachments](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/14)
+
+### 📣 Enhancements (1)
+
+- Use default font provided by Azure DevOps
+  - Issue: [GH#10 - Update font to Segoe UI](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/10)
+  - Pull Request: [PR#15 - Use default Azure DevOps font family](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/15)
 
 ## 🌟 Contributors
 

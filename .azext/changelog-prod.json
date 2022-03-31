@@ -1,7 +1,7 @@
 [
   {
-    "version": "1.1.2",
-    "publishDate": "2022-03-XX",
+    "version": "1.3.0",
+    "publishDate": "2022-04-XX",
     "changes": [
       {
         "type": "fix",
@@ -14,6 +14,12 @@
         "description": "Fixed images always being loaded from the branch `wikiMaster`",
         "issue": 11,
         "pullRequest": 14
+      },
+      {
+        "type": "enhancement",
+        "description": "Use default font provided by Azure DevOps",
+        "issue": 10,
+        "pullRequest": 15
       }
     ]
   },
