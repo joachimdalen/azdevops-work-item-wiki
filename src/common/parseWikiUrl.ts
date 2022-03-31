@@ -1,5 +1,4 @@
-import { IWikiPage } from "../wi-control/types";
-
+import { IWikiPage } from '../wi-control/types';
 
 export const parseWikiUrl = (url: string): IWikiPage | undefined => {
   const expression = /_wiki\/wikis\/(?<wikiName>.+)\/(?<wikiId>\d+)\/(?<wikiPath>.+)/gm;
@@ -11,6 +10,7 @@ export const parseWikiUrl = (url: string): IWikiPage | undefined => {
     }
 
     const wikiName = m.groups?.wikiName?.trim();
+
     const projectNameParts = wikiName?.split('.');
     const projectName =
       projectNameParts !== undefined && projectNameParts?.length > 1
@@ -29,7 +29,7 @@ export const parseWikiUrl = (url: string): IWikiPage | undefined => {
 
     return {
       projectName: projectName,
-      name: wikiName,
+      name: decodeURI(wikiName),
       id: wikiIdNum,
       path: wikiPath
     };

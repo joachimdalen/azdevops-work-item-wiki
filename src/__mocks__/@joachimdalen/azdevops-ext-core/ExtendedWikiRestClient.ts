@@ -17,7 +17,7 @@ export class ExtendedWikiRestClient {
   public TYPE = 'ExtendedWikiRestClient';
   constructor(options: IVssRestClientOptions) {}
 
-  public async getPageByIdText(
+  public async getPageMetadata(
     project: string,
     wikiIdentifier: string,
     id: number,

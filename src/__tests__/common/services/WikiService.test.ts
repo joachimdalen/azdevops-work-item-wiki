@@ -1,15 +1,15 @@
+import { WikiPageMeta } from '@joachimdalen/azdevops-ext-core/ExtendedWikiRestClient';
 import { IProjectInfo } from 'azure-devops-extension-api';
 import { GitRepository } from 'azure-devops-extension-api/Git';
 import { WikiV2 } from 'azure-devops-extension-api/Wiki';
 
+import { mockGetPageMetadata } from '../../../__mocks__/@joachimdalen/azdevops-ext-core/ExtendedWikiRestClient';
 import { mockGetRepository } from '../../../__mocks__/azure-devops-extension-api/Git';
-import {
-  mockGetPageByIdText,
-  mockGetWiki
-} from '../../../__mocks__/azure-devops-extension-api/Wiki';
+import { mockGetWiki } from '../../../__mocks__/azure-devops-extension-api/Wiki';
 import { mockGetFieldValue, mockGetProject } from '../../../__mocks__/azure-devops-extension-sdk';
 import WikiService, { WikiResultCode } from '../../../common/services/WikiService';
 jest.mock('azure-devops-extension-api');
+//jest.mock('@joachimdalen/azdevops-ext-core');
 describe('WikiService', () => {
   const validUrl =
     'https://dev.azure.com/organization/demo-project/_wiki/wikis/demo-project.wiki/1/This-is-a-page';
@@ -25,12 +25,13 @@ describe('WikiService', () => {
 
     it('should return undefined when unknown url', async () => {
       const service = new WikiService();
-      const result = await service.loadWikiPage({ wikiUrl: validUrl });
+      const result = await service.loadWikiPage({ wikiUrl: invalidUrl });
       expect(result.meta?.content).toBeUndefined();
       expect(result.result).toEqual(WikiResultCode.ParseFailure);
     });
 
     it('should return undefined when failing to get project', async () => {
+      mockGetWiki.mockImplementation((wikiName, projectName) => undefined);
       mockGetProject.mockResolvedValue(undefined);
       const service = new WikiService();
       const result = await service.loadWikiPage({ wikiUrl: validUrl });
@@ -50,7 +51,17 @@ describe('WikiService', () => {
       };
       mockGetWiki.mockResolvedValue(wiki);
       mockGetRepository.mockResolvedValue(repo);
-      mockGetPageByIdText.mockResolvedValue('### Hello');
+      const data: WikiPageMeta = {
+        path: '',
+        order: 0,
+        gitItemPath: 'README.md',
+        subPages: [],
+        url: validUrl,
+        remoteUrl: validUrl,
+        id: 1,
+        content: '### Hello'
+      };
+      mockGetPageMetadata.mockResolvedValue(data);
 
       const service = new WikiService();
       const result = await service.loadWikiPage({ wikiUrl: validUrl });

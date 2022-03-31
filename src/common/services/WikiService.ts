@@ -85,7 +85,7 @@ class WikiService implements IWikiService {
       wikiDef = await this.tryGetWiki(wiki.name, wiki.projectName);
 
       if (wikiDef === undefined && wiki.projectName.indexOf('-') > 0) {
-        const spaceProject = wiki.projectName.replaceAll('-', ' ');
+        const spaceProject = wiki.projectName.replace(/-/g, ' ');
         wikiDef = await this.tryGetWiki(wiki.name, spaceProject);
         projectName = spaceProject;
       }
