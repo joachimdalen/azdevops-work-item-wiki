@@ -31,6 +31,13 @@
   ],
   "pullRequests": [
     {
+      "id": 930326934,
+      "number": 17,
+      "submitter": "joachimdalen",
+      "title": "Update dependencies",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/17"
+    },
+    {
       "id": 896276823,
       "number": 15,
       "submitter": "joachimdalen",

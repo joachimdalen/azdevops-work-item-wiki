@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.1 (2022-05-07)
+
+### 🛠️ Maintenance (1)
+
+- Update dependencies
+  - Pull Request: [PR#17 - Update dependencies](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/17)
+
+---
+
 ## 1.3.0 (2022-04-01)
 
 ### 🐛 Fixes (2)
