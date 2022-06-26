@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-
+jest.mock('../../markdown-plugins/sizable-image/rehype.ts')
+jest.mock('../../markdown-plugins/sizable-image/remark.ts')
 import { render, screen } from '@testing-library/react';
 
 import { mockGetConfiguration } from '../../__mocks__/azure-devops-extension-sdk';
