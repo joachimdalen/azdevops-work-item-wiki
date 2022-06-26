@@ -9,7 +9,7 @@ export default function sizableImage(): any {
     visit(tree, 'element', visitor);
     function visitor(node: any) {
       if (node.tagName === 'img') {
-        const src = decodeURIComponent(node.properties.src);
+        const src = decodeURI(node.properties.src);
 
         if (regex.test(src)) {
           const match = regex.exec(src);
@@ -19,7 +19,7 @@ export default function sizableImage(): any {
             const width = match.groups['width'];
             const height = match.groups['height'];
 
-            node.properties.src = url;
+            node.properties.src = encodeURI(url);
             node.properties.width = width;
             node.properties.height = height;
           }
