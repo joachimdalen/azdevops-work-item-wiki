@@ -5,7 +5,6 @@ const regex = /^!\[.+\]\((?<url>.+\s=(?<width>\d+)?x(?<height>\d+)?)\)$/;
 function visitTextBlock(ast: any) {
   return visit(ast, 'text', (node: any, index: any, parent: any) => {
     const { value } = node;
-    console.log(node, index, parent);
     if (value === undefined) return node;
 
     if (regex.test(value)) {
