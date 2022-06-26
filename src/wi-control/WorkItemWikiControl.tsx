@@ -15,6 +15,8 @@ import { ElementContent } from 'react-markdown/lib/ast-to-react';
 import gfm from 'remark-gfm';
 
 import WikiService, { WikiResult, WikiResultCode } from '../common/services/WikiService';
+import sizableImage from '../markdown-plugins/sizable-image/rehype';
+import sizableImageRemark from '../markdown-plugins/sizable-image/remark';
 import { WikiControlConfiguration, WikiResultText } from './types';
 
 const getResult = (result?: WikiResult): WikiResultText | undefined => {
@@ -35,8 +37,7 @@ const getResult = (result?: WikiResult): WikiResultText | undefined => {
     case WikiResultCode.FailedToResolve: {
       return {
         title: 'Failed to resolve project',
-        description:
-          'Failed to resolve the project for the wiki.'
+        description: 'Failed to resolve the project for the wiki.'
       };
     }
     case WikiResultCode.FailedToFindContent: {
@@ -160,7 +161,8 @@ const WorkItemWikiControl = (): JSX.Element => {
       <div className="flex-column flex-grow">
         <div className="padding-8  rendered-markdown-content">
           <ReactMarkdown
-            remarkPlugins={[gfm]}
+            remarkPlugins={[gfm, sizableImageRemark]}
+            rehypePlugins={[sizableImage]}
             transformImageUri={transformImageUrls}
             transformLinkUri={transformLinkUri}
             components={{
