@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1278008367,
+      "number": 18,
+      "submitter": "BlackPhlox",
+      "title": "Missing markdown parsing of image size",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/issues/18"
+    },
+    {
       "id": 1186468910,
       "number": 10,
       "submitter": "BlackPhlox",
@@ -30,6 +37,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 979222236,
+      "number": 19,
+      "submitter": "joachimdalen",
+      "title": "Fix images not supporting size options",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/19"
+    },
     {
       "id": 930326934,
       "number": 17,

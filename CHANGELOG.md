@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.3.2 (2022-06-26)
+
+### 🛠️ Maintenance (1)
+
+- Update dependencies
+  - Pull Request: [PR#19 - Fix images not supporting size options](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/19)
+
+### 🐛 Fixes (1)
+
+- Add support for image sizes
+  - Reported in: [GH#18 - Missing markdown parsing of image size](https://github.com/joachimdalen/azdevops-work-item-wiki/issues/18)
+  - Fixed in: [PR#19 - Fix images not supporting size options](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/19)
+
+## 🌟 Contributors
+
+Thank you to the following for contributing to the latest release
+
+- [@BlackPhlox](https://github.com/BlackPhlox)
+
+---
+
 ## 1.3.1 (2022-05-07)
 
 ### 🛠️ Maintenance (1)
