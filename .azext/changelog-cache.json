@@ -38,6 +38,13 @@
   ],
   "pullRequests": [
     {
+      "id": 1080915840,
+      "number": 20,
+      "submitter": "joachimdalen",
+      "title": "Update dependencies to fix CVE-2022-25858",
+      "url": "https://github.com/joachimdalen/azdevops-work-item-wiki/pull/20"
+    },
+    {
       "id": 979222236,
       "number": 19,
       "submitter": "joachimdalen",
