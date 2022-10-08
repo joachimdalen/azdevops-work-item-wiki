@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.3 (2022-10-08)
+
+### 🛠️ Maintenance (1)
+
+- Update dependencies to fix CVE-2022-25858
+  - Pull Request: [PR#20 - Update dependencies to fix CVE-2022-25858](https://github.com/joachimdalen/azdevops-work-item-wiki/pull/20)
+
+---
+
 ## 1.3.2 (2022-06-26)
 
 ### 🛠️ Maintenance (1)

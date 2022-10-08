@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.3.3",
+    "publishDate": "2022-10-08",
+    "changes": [
+      {
+        "type": "maint",
+        "description": "Update dependencies to fix CVE-2022-25858",
+        "pullRequest": 20
+      }
+    ]
+  },
+  {
     "version": "1.3.2",
     "publishDate": "2022-06-26",
     "changes": [
